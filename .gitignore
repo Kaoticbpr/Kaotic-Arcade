@@ -1,0 +1,3 @@
+# Per-device secrets and local snapshots
+profiles/*/host.env
+profiles/*/backups/

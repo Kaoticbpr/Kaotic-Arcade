@@ -1,0 +1,7 @@
+# Proposed settings to merge into /userdata/system/batocera.conf.
+# Untested — verify key names against the cabinet's Batocera version first.
+
+# 1 frame of run-ahead for arcade fighters (lower input lag)
+fbneo.runahead=1
+mame.runahead=1
+neogeo.runahead=1
