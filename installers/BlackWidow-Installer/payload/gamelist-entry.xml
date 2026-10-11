@@ -1,0 +1,18 @@
+	<game>
+		<path>./bwidow.zip</path>
+		<name>Black Widow</name>
+		<desc>Atari's 1982 vector-graphics shooter. You are a spider defending your web from waves of bugs. Move with the left stick and fire in any direction with the right stick. Bugs that reach the web can chew through it, so clear them fast, and watch out for the deadly Mosquitoes and Grenade bugs. The game can be played by one or two players taking turns.</desc>
+		<image>./images/bwidow-image.png</image>
+		<video>./videos/bwidow-video.mp4</video>
+		<marquee>./images/bwidow-marquee.png</marquee>
+		<thumbnail>./images/bwidow-thumb.jpg</thumbnail>
+		<manual>./manuals/bwidow-manual.pdf</manual>
+		<rating>0.8</rating>
+		<releasedate>19820101T000000</releasedate>
+		<developer>Atari</developer>
+		<publisher>Atari</publisher>
+		<genre>Shooter</genre>
+		<players>1-2</players>
+		<lang>en</lang>
+		<region>us</region>
+	</game>
