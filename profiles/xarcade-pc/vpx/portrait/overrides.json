@@ -1,0 +1,270 @@
+{
+ "Apollo 13 (Sega 1995)": {
+  "VOfs": 22.0,
+  "ScaleX": 1.0084,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Big Trouble in Little China (Original 2026)": {
+  "VOfs": 12.0,
+  "dmd_aspect": 1.7777777777777777,
+  "ScaleX": 1.0134,
+  "stretch_x": 1.17,
+  "stretch_y": 1.04
+ },
+ "Total Nuclear Annihilation (Spooky 2017)": {
+  "dmd_aspect": 1.7777777777777777,
+  "VOfs": 22.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Attack from Mars (Bally 1995)": {
+  "ScaleX": 1.15,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14,
+  "player_extra": {
+   "SSRefl": 0,
+   "PFReflection": 3,
+   "MSAASamples": 1,
+   "Sharpen": 0
+  }
+ },
+ "Theatre of Magic (Bally 1995)": {
+  "ScaleX": 1.1309,
+  "Shrink": 1.11,
+  "VOfs": 0.0,
+  "hide_b2s_dmd": 1.0,
+  "strip_h": 282.0
+ },
+ "Terminator 2 (Williams 1991)": {
+  "ScaleX": 1.1125,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Tom and Jerry (Original 2019)": {
+  "ScaleX": 1.0606,
+  "VOfs": 40.0,
+  "bg_off": true,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Medieval Madness (Williams 1997)": {
+  "ScaleX": 0.9985,
+  "VOfs": 100.0,
+  "Shrink": 0.94,
+  "stretch_x": 1.18,
+  "stretch_y": 0.9
+ },
+ "Metallica Remastered - Pro (Stern 2024)": {
+  "ScaleX": 0.9841,
+  "VOfs": 50.0,
+  "Shrink": 0.92
+ },
+ "The Machine Bride of Pin-bot (Williams 1991)": {
+  "ScaleX": 0.9841,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Jurassic Park (Data East 1993)": {
+  "ScaleX": 0.9794,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "The Walking Dead LE Premium (Stern 2014)": {
+  "ScaleX": 0.9794,
+  "VOfs": 18.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Firepower (Williams 1980)": {
+  "ScaleX": 0.9748,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "The Lord of the Rings (Stern 2003)": {
+  "ScaleX": 0.9701,
+  "VOfs": 18.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Independence Day (Sega 1996)": {
+  "ScaleX": 0.9656,
+  "VOfs": 22.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Godzilla (Sega 1998)": {
+  "ScaleX": 1.12,
+  "Shrink": 1.14,
+  "VOfs": 20.0
+ },
+ "Black Rose (Bally 1992)": {
+  "ScaleX": 1.12,
+  "Shrink": 1.14,
+  "VOfs": 20.0
+ },
+ "Monster Bash (Williams 1998)": {
+  "ScaleX": 0.9521,
+  "stretch_x": 1.18,
+  "stretch_y": 0.9,
+  "VOfs": 60.0
+ },
+ "Tales from the Crypt (Data East 1993)": {
+  "ScaleX": 0.9477,
+  "VOfs": 50.0,
+  "Shrink": 0.95
+ },
+ "Judge Dredd (Bally 1993)": {
+  "ScaleX": 0.9433,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "The Getaway High Speed II (Williams 1992)": {
+  "ScaleX": 0.967,
+  "VOfs": 18.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Cactus Canyon (Bally 1998)": {
+  "ScaleX": 0.9347,
+  "VOfs": 22.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Twister (Sega 1996)": {
+  "ScaleX": 0.9347,
+  "VOfs": 22.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Elvira and the Party Monsters (Bally 1989)": {
+  "VOfs": 26.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "No Good Gofers - Rawds Edition (Williams 1997)": {
+  "VOfs": 22.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Star Trek The Next Generation (Williams 1993)": {
+  "VOfs": 22.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Star Wars (Data East 1992)": {
+  "VOfs": 50.0,
+  "stretch_x": 1.12,
+  "stretch_y": 0.98
+ },
+ "Tales of the Arabian Nights (Williams 1996)": {
+  "VOfs": 22.0
+ },
+ "Twilight Zone (Bally 1993)": {
+  "VOfs": 50.0,
+  "stretch_x": 1.12,
+  "stretch_y": 1.06
+ },
+ "WWF Royal Rumble (Data East 1994)": {
+  "VOfs": 22.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "White Water (Williams 1993)": {
+  "VOfs": 50.0,
+  "Shrink": 0.92,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Pirates of the Caribbean (Stern 2006)": {
+  "VOfs": 50.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Scared Stiff (Bally 1996)": {
+  "ScaleX": 0.99,
+  "Shrink": 1.09,
+  "VOfs": 12.0
+ },
+ "Fathom (Bally 1981)": {
+  "Shrink": 1.12,
+  "VOfs": 12.0
+ },
+ "Diner (Williams 1990)": {
+  "strip_h": 262.0,
+  "Shrink": 1.04,
+  "VOfs": 12.0
+ },
+ "Cirqus Voltaire (Bally 1997)": {
+  "Shrink": 1.08,
+  "VOfs": 16.0
+ },
+ "Creature from the Black Lagoon (Bally 1992)": {
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Funhouse (Williams 1990)": {
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Gorgar (Williams 1979)": {
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Indiana Jones The Pinball Adventure (Williams 1993)": {
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Primus (Stern 2018)": {
+  "stretch_x": 1.17,
+  "stretch_y": 1.14
+ },
+ "Street Fighter II (Gottlieb 1993)": {
+  "VOfs": 144.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.117
+ },
+ "Class of 1812 (Gottlieb 1991)": {
+  "VOfs": 132.0,
+  "stretch_x": 1.25,
+  "stretch_y": 0.919
+ },
+ "The Addams Family (Bally 1992)": {
+  "VOfs": 16.0,
+  "stretch_x": 1.2,
+  "stretch_y": 1.11
+ },
+ "AC-DC LUCI Premium (Stern 2013)": {
+  "VOfs": 165.0,
+  "stretch_x": 1.17,
+  "stretch_y": 0.985
+ },
+ "Wipe Out (Gottlieb 1993)": {
+  "VOfs": 15.0,
+  "stretch_x": 1.25,
+  "stretch_y": 1.131
+ },
+ "Tee'd Off (Gottlieb 1993)": {
+  "VOfs": 153.0,
+  "stretch_x": 1.22,
+  "stretch_y": 1.117
+ },
+ "Rescue 911 (Gottlieb 1994)": {
+  "VOfs": 136.0,
+  "stretch_x": 1.28,
+  "stretch_y": 1.087
+ },
+ "Freddy - A Nightmare on Elm Street (Gottlieb 1994)": {
+  "VOfs": 128.0,
+  "stretch_x": 1.2,
+  "stretch_y": 1.091
+ },
+ "Punch-Out (Original 2025)": {
+  "VOfs": 65.0,
+  "stretch_x": 1.17,
+  "stretch_y": 1.216,
+  "bg_right": 0.0,
+  "bg_off": 1.0,
+  "dmd_off": 1.0
+ }
+}

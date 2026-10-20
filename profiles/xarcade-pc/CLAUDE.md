@@ -6,9 +6,9 @@ for pinball. This is a separate mod from the `iconic-sf2-pi5` cabinet.
 
 ## Status
 
-Scaffold only — nothing has been inspected yet. On first use, fill in
-`machine.env` and update this file with what was found
-(see "First setup checklist").
+In use on the author's Bazzite mini PC (rotating 43" TV, WLED lights). The lights engine, rotate scripts,
+portrait layout tool and measured X-Arcade maps are in this profile; one-click installers are not added yet.
+On a new machine, fill in `machine.env` and work through the "First setup checklist".
 
 ## Connection
 
