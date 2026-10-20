@@ -2,3 +2,10 @@
 profiles/*/host.env
 profiles/*/machine.env
 profiles/*/backups/
+
+# Third-party / copyrighted files the cabinet mods need but must never be committed
+*.apk
+*.so
+profiles/*/**/roms/
+profiles/*/**/nvram/
+profiles/*/**/platform-tools/

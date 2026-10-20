@@ -1,0 +1,98 @@
+==================================================================
+  WHAT'S ON THE CABINET AFTER INSTALLING
+==================================================================
+
+MAIN MENU
+  X-Men '97               the original, untouched
+  Big Blue                Street Fighter II Champion Edition
+  Yoga Flame              Street Fighter II Hyper Fighting
+  Extra Games             the 20 below
+
+EXTRA GAMES  (need RetroArch + the two cores + your own ROMs)
+
+  game                          board    core           rom
+  ----------------------------  -------  -------------  -------------
+  Street Fighter Alpha          CPS-2    FinalBurn Neo  sfa.zip
+  Street Fighter Alpha 2        CPS-2    FinalBurn Neo  sfa2u + sfa2
+  Street Fighter Alpha 3        CPS-2    FinalBurn Neo  sfa3u + sfa3
+  SF III: New Generation        CPS-3    FinalBurn Neo  sfiii.zip
+  SF III: 2nd Impact            CPS-3    FinalBurn Neo  sfiii2.zip
+  SF III: 3rd Strike            CPS-3    FinalBurn Neo  sfiii3.zip
+  Red Earth                     CPS-3    FinalBurn Neo  redearth.zip
+  Cyberbots                     CPS-2    FinalBurn Neo  cybots.zip
+  The Punisher                  CPS-1    FinalBurn Neo  punisher.zip
+  Power Stone                   NAOMI    Flycast        pstone.zip
+  Guilty Gear X                 NAOMI    Flycast        ggx.zip
+  King of Fighters '98          Neo Geo  FinalBurn Neo  kof98.zip
+  Garou: Mark of the Wolves     Neo Geo  FinalBurn Neo  garou.zip
+  Real Bout Fatal Fury Special  Neo Geo  FinalBurn Neo  rbffspec.zip
+  Samurai Shodown V Special     Neo Geo  FinalBurn Neo  samsh5sp.zip
+  SVC Chaos                     Neo Geo  FinalBurn Neo  svc.zip
+  Mortal Kombat                 Midway   FinalBurn Neo  mk.zip
+  Mortal Kombat II              Midway   FinalBurn Neo  mk2.zip
+  Mortal Kombat 3               Midway   FinalBurn Neo  mk3.zip
+  Ultimate Mortal Kombat 3      Midway   FinalBurn Neo  umk3.zip
+
+Alpha 2 and Alpha 3 are split sets: the US roms (sfa2u / sfa3u)
+need their Euro parents (sfa2 / sfa3) in the same folder.  Keep
+both.
+
+BIOS you must supply as well:
+  naomi.zip    Guilty Gear X, Power Stone
+  neogeo.zip   SVC Chaos, Garou, KOF '98, Real Bout, Samurai Shodown
+
+The CPS-3 games take up to 70 seconds to start the first time -
+the encrypted SIMM data has to be decrypted.  That is normal, not
+a hang.
+
+The four Mortal Kombat boards are set to FREE PLAY, in the boards'
+own setup menus, and that setting ships with this package.  Press
+Start and you are straight in, on either side, and continuing after
+a loss costs nothing.  Out of the box these boards want TWO credits
+to start - the cabinet still drops two coins in behind the scenes as
+well, so Start works even if a board ever loses its settings.
+
+
+BUTTON LAYOUTS
+--------------
+Every layout below was read out of the emulator core itself
+(RetroArch > Quick Menu > Controls > Port 1), not guessed from the
+arcade cabinet.  The control-panel screen shown before each game
+matches exactly what the game does.
+
+Six-button Capcom games - Alpha 1/2/3, Red Earth, all three SF III:
+
+      top row     WEAK / MEDIUM / STRONG  PUNCH
+      bottom row  WEAK / MEDIUM / STRONG  KICK
+
+Neo Geo games - SVC Chaos, Garou, KOF '98, Real Bout, Samurai
+Shodown V Special:
+
+      top row     A    B    C
+      bottom row  D   A+B  C+D
+
+Mortal Kombat 1, II, 3 and Ultimate:
+
+      top row     HIGH PUNCH   BLOCK   HIGH KICK
+      bottom row  LOW PUNCH    RUN     LOW KICK
+
+      MK 1 and MK II have no Run, so their middle bottom button is
+      shown dimmed.
+
+Guilty Gear X:      top  PUNCH  KICK  SLASH      bottom  H-SLASH
+                    (Dust is Slash + H-Slash together)
+Power Stone:        top  PUNCH  KICK  JUMP
+Cyberbots:          top  LOW ATTACK  HIGH ATTACK  BOOST
+                    bottom  WEAPON
+The Punisher:       top  ATTACK  JUMP
+                    (both together does the special, for some health)
+
+Where a button is shown dimmed on the control screen, that game
+genuinely does not use it.
+
+The Neo Geo, Mortal Kombat, Guilty Gear, Power Stone, Cyberbots
+and Punisher layouts are NOT the emulator's defaults.  Left alone,
+those cores put the first two buttons on the BOTTOM row - and put
+Mortal Kombat's Block out on a shoulder button instead of in the
+middle of the top row, where every MK cabinet ever built has it.
+The mod ships per-game remaps that fix this.  See HOW-IT-WORKS.txt.

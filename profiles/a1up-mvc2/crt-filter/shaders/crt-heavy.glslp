@@ -1,0 +1,15 @@
+# HEAVY  - deep gaps and a strong grille. Darkest.
+# Toggled by CRT-FILTER.bat - do not rename, the .bat looks for these names.
+shaders = "1"
+shader0 = "cabinet-crt.glsl"
+filter_linear0 = "true"
+wrap_mode0 = "clamp_to_border"
+scale_type0 = "viewport"
+scale0 = "1.000000"
+parameters = "SCANLINE_WEIGHT;BEAM_WIDTH;MASK_STRENGTH;SHARPNESS;GLOW;BRIGHT_BOOST"
+SCANLINE_WEIGHT = "0.60"
+BEAM_WIDTH = "0.45"
+MASK_STRENGTH = "0.35"
+SHARPNESS = "1.00"
+GLOW = "0.25"
+BRIGHT_BOOST = "1.35"

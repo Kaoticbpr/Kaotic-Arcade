@@ -1,0 +1,18 @@
+The two .so files here are libretro emulator cores, downloaded
+unmodified from the official libretro buildbot:
+
+    https://buildbot.libretro.com/nightly/android/latest/arm64-v8a/
+
+  fbneo_libretro_android.so     FinalBurn Neo   - arcade (CPS-1/2/3,
+                                Neo Geo and many others)
+                                https://github.com/libretro/FBNeo
+                                Free for non-commercial use.
+
+  flycast_libretro_android.so   Flycast         - Sega NAOMI and
+                                Dreamcast
+                                https://github.com/flyinghead/flycast
+                                GPLv2.
+
+They are included so the installer can set everything up without
+you having to fetch them through RetroArch's Online Updater.
+Nothing here has been modified.

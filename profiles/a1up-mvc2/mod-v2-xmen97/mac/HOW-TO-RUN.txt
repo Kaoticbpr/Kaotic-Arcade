@@ -1,0 +1,77 @@
+==================================================================
+  MAC USERS - START HERE
+==================================================================
+
+Read  ../INSTALL-GUIDE.txt  first.  You still have to turn on USB
+debugging on the cabinet with a USB keyboard before any of this
+works.  Everything else is included - no downloads, no Homebrew,
+no internet connection needed.
+
+
+TO INSTALL
+----------
+  1. Move the whole "XMEN97-Cabinet-Mod-v2" folder to your Downloads
+     folder (if it isn't already).
+
+  2. Open  Terminal   (press Cmd+Space, type "Terminal", hit Return).
+
+  3. Copy this ENTIRE line, paste it into Terminal, press Return:
+
+        cd ~/Downloads/XMEN97-Cabinet-Mod-v2 && bash mac/INSTALL.command
+
+  4. Follow the prompts.  It takes several minutes.  Do not unplug.
+
+
+TO UNINSTALL (revert to stock)
+------------------------------
+  Same thing, with the other script:
+
+        cd ~/Downloads/XMEN97-Cabinet-Mod-v2 && bash mac/UNINSTALL.command
+
+
+TO CHECK YOUR ROMS WITHOUT INSTALLING
+-------------------------------------
+        cd ~/Downloads/XMEN97-Cabinet-Mod-v2 && bash mac/verify-roms.sh
+
+  It reports OK or MISMATCH for each set and names the files that
+  are missing or the wrong version.  It changes nothing.  The
+  installer runs this same check for you anyway.
+
+
+IF YOU PUT THE FOLDER SOMEWHERE ELSE
+------------------------------------
+  Type   bash    then a space, then DRAG INSTALL.command from
+  Finder into the Terminal window, then press Return.  Terminal
+  fills in the path for you.
+
+
+WHY "bash" AND NOT DOUBLE-CLICK?
+--------------------------------
+  Zip files made on Windows lose the "executable" flag that macOS
+  wants before it will let you double-click a script.  Running it
+  with "bash" sidesteps that entirely, so this always works.
+
+  If you would rather double-click, run this once first:
+
+        chmod +x ~/Downloads/XMEN97-Cabinet-Mod-v2/mac/*.command \
+                 ~/Downloads/XMEN97-Cabinet-Mod-v2/mac/platform-tools/adb
+
+  ...then right-click INSTALL.command -> Open  (right-click, NOT a
+  normal double-click, the first time only).  macOS will otherwise
+  refuse it as being "from an unidentified developer".
+
+
+DO I NEED TO INSTALL ANYTHING?
+------------------------------
+  No.  Google's "adb" is included in mac/platform-tools and runs
+  natively on both Intel and Apple Silicon Macs.  Nothing is
+  installed onto your Mac.  The two emulator cores are in this
+  package as well, so the cabinet never has to go online.
+
+  Unlike Windows, macOS needs no USB driver for the cabinet.  Just
+  a micro-USB DATA cable - charge-only cables will NOT work.
+
+  (If adb somehow will not run, the script falls back to any adb
+   you already have.  You can install one with:
+        brew install android-platform-tools )
+==================================================================

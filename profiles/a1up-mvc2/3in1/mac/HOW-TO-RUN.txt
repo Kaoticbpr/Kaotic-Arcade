@@ -1,0 +1,64 @@
+==================================================================
+  MAC USERS - START HERE
+==================================================================
+
+macOS blocks scripts that came from the internet until you tell it
+otherwise. The line below gets around that in one step - it does NOT
+need you to change any security settings.
+
+
+TO INSTALL
+----------
+  1. Move the whole "MVC2-Cabinet-3in1" folder to your Downloads
+     folder (if it isn't already).
+
+  2. Open  Terminal   (press Cmd+Space, type "Terminal", hit Return).
+
+  3. Copy this ENTIRE line, paste it into Terminal, press Return:
+
+        cd ~/Downloads/MVC2-Cabinet-3in1 && bash mac/INSTALL.command
+
+  4. Follow the prompts.
+
+
+TO UNINSTALL (revert to stock)
+------------------------------
+  Same thing, with the other script:
+
+        cd ~/Downloads/MVC2-Cabinet-3in1 && bash mac/UNINSTALL.command
+
+
+IF YOU PUT THE FOLDER SOMEWHERE ELSE
+------------------------------------
+  Type   bash    then a space, then DRAG the INSTALL.command file
+  from Finder into the Terminal window, then press Return.
+  Terminal fills in the path for you.
+
+
+WHY "bash" AND NOT DOUBLE-CLICK?
+--------------------------------
+  Zip files made on Windows lose the "executable" flag that macOS
+  wants before it will let you double-click a script. Running it with
+  "bash" sidesteps that entirely, so this always works.
+
+  If you'd rather double-click it, run this once first:
+
+        chmod +x ~/Downloads/MVC2-Cabinet-3in1/mac/*.command
+
+  ...then right-click INSTALL.command -> Open (right-click, NOT a
+  normal double-click, the first time only).
+
+
+DO I NEED TO INSTALL ANYTHING?
+------------------------------
+  No. Google's "adb" tool is included in this folder (mac/platform-tools)
+  and runs natively on both Intel and Apple Silicon Macs. Nothing is
+  installed onto your Mac.
+
+  Unlike Windows, macOS needs no USB driver for the cabinet. Just a
+  micro-USB DATA cable.
+
+  (If adb somehow won't run, the script falls back to any adb you
+   already have. You can install one with:
+        brew install android-platform-tools )
+==================================================================
