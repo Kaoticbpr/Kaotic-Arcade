@@ -1,0 +1,56 @@
+# Arcade haptic kit for non-VPX pinball games (Pinball Wicked): a "Pinball Game (haptic)" output that plays the
+# full game mix on the TV and a LOW-PASSED copy (80 Hz, 48 dB/oct: thumps only, voices cut) on the X-Arcade pedestal haptic kit (headphone jack).
+# Games are moved here by haptic-router.sh. Run by arcade-haptic-lp.service. VPX's "Pinball Playfield" is untouched.
+context.properties = { log.level = 0 }
+context.spa-libs = { audio.convert.* = audioconvert/libspa-audioconvert  support.* = support/libspa-support }
+context.modules = [
+  { name = libpipewire-module-rt  flags = [ ifexists nofail ] }
+  { name = libpipewire-module-protocol-native }
+  { name = libpipewire-module-client-node }
+  { name = libpipewire-module-adapter }
+  { name = libpipewire-module-filter-chain
+    args = {
+      node.description = "Haptic Low-pass"
+      media.name = "Haptic Low-pass"
+      filter.graph = {
+        nodes = [
+          { type = builtin name = a1L label = bq_lowpass control = { "Freq" = 80.0 "Q" = 0.541 } }
+          { type = builtin name = a2L label = bq_lowpass control = { "Freq" = 80.0 "Q" = 1.307 } }
+          { type = builtin name = a3L label = bq_lowpass control = { "Freq" = 80.0 "Q" = 0.541 } }
+          { type = builtin name = a4L label = bq_lowpass control = { "Freq" = 80.0 "Q" = 1.307 } }
+          { type = builtin name = a1R label = bq_lowpass control = { "Freq" = 80.0 "Q" = 0.541 } }
+          { type = builtin name = a2R label = bq_lowpass control = { "Freq" = 80.0 "Q" = 1.307 } }
+          { type = builtin name = a3R label = bq_lowpass control = { "Freq" = 80.0 "Q" = 0.541 } }
+          { type = builtin name = a4R label = bq_lowpass control = { "Freq" = 80.0 "Q" = 1.307 } }
+          { type = builtin name = gL label = linear control = { "Mult" = 4.0 } }
+          { type = builtin name = gR label = linear control = { "Mult" = 4.0 } }
+          { type = ladspa name = lim plugin = "/usr/lib64/ladspa/caps.so" label = CompressX2
+            control = { "measure" = 0 "mode" = 2 "threshold" = 0.15 "strength" = 0.9 "attack" = 0.05 "release" = 0.4 "gain (dB)" = 0.0 } }
+        ]
+        links = [
+          { output = "a1L:Out" input = "a2L:In" } { output = "a2L:Out" input = "a3L:In" } { output = "a3L:Out" input = "a4L:In" } { output = "a4L:Out" input = "gL:In" } { output = "gL:Out" input = "lim:in.l" }
+          { output = "a1R:Out" input = "a2R:In" } { output = "a2R:Out" input = "a3R:In" } { output = "a3R:Out" input = "a4R:In" } { output = "a4R:Out" input = "gR:In" } { output = "gR:Out" input = "lim:in.r" }
+        ]
+        inputs = [ "a1L:In" "a1R:In" ]
+        outputs = [ "lim:out.l" "lim:out.r" ]  
+      }
+      capture.props = { node.name = "haptic_lowpass" media.class = Audio/Sink audio.position = [ FL FR ] node.passive = true }
+      playback.props = { node.name = "haptic_lowpass.output" target.object = "@HAPTIC_SINK@" node.dont-reconnect = true audio.position = [ FL FR ] }
+    }
+  }
+  { name = libpipewire-module-combine-stream
+    args = {
+      combine.mode = sink
+      node.name = "pinball_game_haptic"
+      node.description = "Pinball Game (haptic)"
+      combine.latency-compensate = false
+      combine.props = { audio.position = [ FL FR ] }
+      stream.props = { stream.dont-remix = true }
+      stream.rules = [
+        { matches = [ { media.class = "Audio/Sink" node.name = "@TV_SINK@" }
+                      { media.class = "Audio/Sink" node.name = "haptic_lowpass" } ]
+          actions = { create-stream = { } } }
+      ]
+    }
+  }
+]

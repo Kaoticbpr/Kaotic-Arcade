@@ -7,7 +7,7 @@ for pinball. This is a separate mod from the `iconic-sf2-pi5` cabinet.
 ## Status
 
 In use on the author's Bazzite mini PC (rotating 43" TV, WLED lights). The lights engine, rotate scripts,
-portrait layout tool and measured X-Arcade maps are in this profile; one-click installers are not added yet.
+portrait layout tool, measured X-Arcade maps and the one-click installers (`install/`) are in this profile.
 On a new machine, fill in `machine.env` and work through the "First setup checklist".
 
 ## Connection

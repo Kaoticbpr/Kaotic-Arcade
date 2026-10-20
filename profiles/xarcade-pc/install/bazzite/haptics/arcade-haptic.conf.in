@@ -1,0 +1,27 @@
+# Arcade haptic kit: a "Pinball Playfield" output that plays to BOTH the TV (HDMI) and the X-Arcade pedestal
+# haptic kit (mini PC headphone jack). Visual Pinball sends its playfield / mechanical sounds here
+# (VPinballX.ini [Player] SoundDevice = Pinball Playfield); music and callouts stay on the TV only.
+# Haptic strength = volume of the headphone-jack output (haptic-level.sh). Run by arcade-haptic.service.
+context.properties = { log.level = 0 }
+context.spa-libs = { audio.convert.* = audioconvert/libspa-audioconvert  support.* = support/libspa-support }
+context.modules = [
+  { name = libpipewire-module-rt  flags = [ ifexists nofail ] }
+  { name = libpipewire-module-protocol-native }
+  { name = libpipewire-module-client-node }
+  { name = libpipewire-module-adapter }
+  { name = libpipewire-module-combine-stream
+    args = {
+      combine.mode = sink
+      node.name = "pinball_playfield"
+      node.description = "Pinball Playfield"
+      combine.latency-compensate = false
+      combine.props = { audio.position = [ FL FR ] }
+      stream.props = { stream.dont-remix = true }
+      stream.rules = [
+        { matches = [ { media.class = "Audio/Sink" node.name = "@TV_SINK@" }
+                      { media.class = "Audio/Sink" node.name = "@HAPTIC_SINK@" } ]
+          actions = { create-stream = { } } }
+      ]
+    }
+  }
+]

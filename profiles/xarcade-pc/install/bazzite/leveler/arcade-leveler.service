@@ -1,0 +1,6 @@
+[Unit]
+Description=Arcade loudness leveler (only while ES-DE is open)
+
+[Service]
+Type=simple
+ExecStart=%h/Emulation/tools/scripts/arcade-leveler.sh
