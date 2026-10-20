@@ -1,0 +1,26 @@
+macOS
+-----
+Double-click  CRT-FILTER.command
+
+The first time, macOS will refuse because the file was not downloaded
+from the App Store.  Either:
+
+  * right-click (or Control-click) CRT-FILTER.command and choose Open,
+    then Open again in the dialog, or
+
+  * open Terminal, drag the  mac  folder onto the Terminal window to
+    get its path, and run:
+        cd <that path>
+        chmod +x CRT-FILTER.command
+        ./CRT-FILTER.command
+
+Run it once to switch the CRT filter on, run it again to switch it off.
+
+To choose a strength, pass it as an argument in Terminal:
+        ./CRT-FILTER.command light
+        ./CRT-FILTER.command medium
+        ./CRT-FILTER.command heavy
+        ./CRT-FILTER.command off
+        ./CRT-FILTER.command status
+
+See README.txt in the folder above for the rest.

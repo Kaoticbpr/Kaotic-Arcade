@@ -1,0 +1,15 @@
+# LIGHT  - a hint of scanline, no grille. Brightest.
+# Toggled by CRT-FILTER.bat - do not rename, the .bat looks for these names.
+shaders = "1"
+shader0 = "cabinet-crt.glsl"
+filter_linear0 = "true"
+wrap_mode0 = "clamp_to_border"
+scale_type0 = "viewport"
+scale0 = "1.000000"
+parameters = "SCANLINE_WEIGHT;BEAM_WIDTH;MASK_STRENGTH;SHARPNESS;GLOW;BRIGHT_BOOST"
+SCANLINE_WEIGHT = "0.25"
+BEAM_WIDTH = "0.65"
+MASK_STRENGTH = "0.00"
+SHARPNESS = "0.90"
+GLOW = "0.10"
+BRIGHT_BOOST = "1.10"

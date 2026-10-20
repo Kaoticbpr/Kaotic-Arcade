@@ -9,6 +9,7 @@ Each setup is a separate mod with its own folder under `profiles/`:
 |---|---|
 | [`xarcade-pc`](profiles/xarcade-pc/) | The rotating KaoticBPR arcade: X-Arcade Arcade2TV-XR, Bazzite mini PC, ES-DE + VPX standalone, portrait pinball, WLED lights |
 | [`iconic-sf2-pi5`](profiles/iconic-sf2-pi5/) | Iconic Street Fighter II cabinet (Raspberry Pi 5), managed over SSH |
+| [`a1up-mvc2`](profiles/a1up-mvc2/) | Arcade1Up Marvel vs Capcom 2 / X-Men '97 cabinet expansion: extra games, two players, custom menu (Android, no root) |
 
 Open Claude Code inside a profile folder to work on that setup; its `CLAUDE.md`
 holds the device details and rules.

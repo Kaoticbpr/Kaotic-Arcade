@@ -1,0 +1,326 @@
+==================================================================
+  HOW IT WORKS  -  notes for anyone modifying or debugging this
+==================================================================
+Not needed to install.  This is the "why", so the next person does
+not have to rediscover it.
+
+
+TWO PLAYERS  (the hard one)
+---------------------------
+Only player 1 reaches Android's input system.  The control panel
+appears as a single evdev device called "robot", and it carries
+player 1's stick and buttons, plus 2P START and the service switch
+- and nothing else.  Player 2's stick and action buttons never
+enter Android at all.  So RetroArch, which reads Android input and
+nothing else, can never see player 2.  That is why the added games
+were single-player for so long.
+
+The vendor's own emulator does not use Android input either.  It
+reads the panel straight from /dev/umidokey, a character device
+that carries BOTH players - and which happens to be world
+readable (crwxrwxrwx).  So an ordinary app can read player 2 there.
+
+The menu app therefore runs a small service that:
+    reads /dev/umidokey every 3 ms
+    decodes it
+    sends the result to RetroArch's UDP network-gamepad port
+
+RetroArch has that receiver compiled in, so nothing about
+RetroArch itself needs patching.
+
+  Panel word: 4 bytes, two 16-bit halves, one per player.
+    bytes 0..1 = player 1, bytes 2..3 = player 2
+  Mask within a half:
+    UP 0400  DOWN 0800  LEFT 0200  RIGHT 0100
+    top row    L 0040   M 0002   R 0001
+    bottom row L 4000   M 8000   R 0080
+    START 2000
+
+This only works because the cabinet ships SELinux in permissive
+mode.  The kernel logs "avc: denied ... permissive=1" every time
+the service opens the device, and allows it anyway.  No root.
+
+There is no coin button on the panel, so a START press sends a
+coin first and then Start, per player.
+
+
+SOUND
+-----
+The config used to say  audio_driver = "audiotrack"  - a driver
+this RetroArch build does not contain.  RetroArch fell back to no
+audio driver and ran every game silent.  The correct value is
+"opensl" (the only real one here; the full list is rsound, opensl,
+null).
+
+That alone then broke the two Flycast games: with opensl they
+deadlock at the splash screen and the app goes "not responding".
+Adding  audio_sync = "false"  fixes it, and the eight FinalBurn
+games are unaffected.  Do not remove that line - dropping it kills
+Guilty Gear X and Power Stone while leaving everything else fine,
+which is a horrible thing to have to diagnose twice.
+
+Separately: this cabinet's headphone-jack detect reads as "always
+inserted", so Android routes media to the *headset* device slot.
+If audio is silent, that slot's volume is what matters, not the
+speaker one.
+
+
+THE LIVE BUTTON
+---------------
+An accessibility service watches for keycode 105 (LIVE) held for
+3 seconds, then brings the menu back.  It has to be an
+accessibility service because it must see keys while another app
+owns the screen.  It consumes the key either way, because FinalBurn
+maps R2 to the service switch and CPS2 games would drop into their
+TEST MENU.
+
+The cabinet wipes enabled_accessibility_services on every boot,
+which used to kill this after every power cycle.  The menu app now
+re-arms it from a BOOT_COMPLETED receiver, using
+WRITE_SECURE_SETTINGS.  That permission is grantable over adb
+because its protection level includes "development" - so no root,
+and the grant survives reboots.
+
+  If you reinstall the APK, you MUST clear the setting and set it
+  again.  Setting the same value twice leaves the OLD, now stale
+  service code bound, and the button silently does nothing.
+
+
+BOOTING TO THE MENU
+-------------------
+The stock app auto-launches itself at boot via
+com.arcade.AuToStartReciver and covers the menu.  Shell cannot
+disable that component (SecurityException), so instead the
+accessibility service watches window changes and takes the screen
+back - but only for the first 45 seconds after boot, so that later
+on you can actually open MvC2.
+
+
+MENU MUSIC
+----------
+res/raw/menu_music.mp3 in the menu APK, played by a static holder
+outside any Activity so it does not restart when you move between
+the home screen and the grid.  Driven by the same window-change
+events, so it stops for every launch path including the vendor
+apps.  It releases the player a few seconds after hiding, so no
+audio object is held during gameplay.
+
+  res/raw audio must be STORED, not deflated, or MediaPlayer
+  throws Resources$NotFoundException even though the resource id
+  resolves.  apktool.yml needs "mp3" in doNotCompress.
+
+
+VOLUME
+------
+Something raises the media volume during boot (it is not the stock
+app - tested).  Rather than keep hunting it, the menu remembers the
+volume while its own screens are up and re-applies it a few times
+as the system settles.
+
+Also: the vendor menu treated ANY keycode <= 103 as "confirm the
+highlighted tile", so the volume rocker launched a game.  Volume up
+and down are now passed through.
+
+
+CONTROL SCREENS
+---------------
+Seven of the ten are genuine stock Arcade1Up screens with only the
+logo replaced - the stock screens differ from each other in nothing
+but the logo, and their LIGHT/MEDIUM/HEAVY labels are already
+right.  The other three (Guilty Gear X, Power Stone, SVC Chaos)
+have different button counts and were drawn from scratch.
+
+Button names came from each core's own descriptors, read in
+RetroArch under Quick Menu > Controls > Port 1 Controls.  Do not
+guess them from the arcade layout - three of three guesses were
+wrong.
+
+
+SHIPPING THE EMULATOR CORES
+---------------------------
+It was previously believed the cores could only be installed by
+RetroArch's own Online Updater, because its core directory
+(/data/data/com.retroarch.aarch64/cores) is 0700 app-private and
+/sdcard is mounted noexec, so a core copied there could never be
+loaded.
+
+Both halves are true, but the conclusion was not.  Checking
+/proc/mounts:
+
+    /data              rw,nosuid,nodev,noatime      <- NOT noexec
+    /storage/emulated  rw,nosuid,nodev,noexec       <- noexec
+
+So code can execute from /data; it is only the sdcard that cannot.
+And /data/local/tmp is drwxrwx--x - world-traversable - so another
+app can open a world-readable file inside it by full path.
+
+The installer therefore pushes both cores to
+/data/local/tmp/cores (dir 755, files 644) and the menu passes that
+path to RetroArch as the LIBRETRO intent extra.  Verified in the
+log:
+
+    [ENV] Libretro path: "/data/local/tmp/cores/fbneo_libretro_android.so"
+    [Core] Loading dynamic libretro core from: ".../fbneo_libretro_android.so"
+
+This relies on SELinux being permissive - loading it logs
+"avc: denied { execute } ... permissive=1" and proceeds anyway.
+That is the same dependency /dev/umidokey already has, and it holds
+on every stock MvC2 cabinet.
+
+ControlsActivity prefers the pushed core and falls back to
+RetroArch's own private cores directory if it is not there, so
+cabinets set up the old way (Online Updater) keep working.  Both
+paths were tested.
+
+
+NAOMI BIOS - naomi.zip GOES IN TWO PLACES
+-----------------------------------------
+Guilty Gear X and Power Stone failed with:
+
+    [NAOMI] naomi: Cannot open epr-21576h.ic27
+    [BOOT] Error: cannot load BIOS naomi
+
+while naomi.zip was sitting in /sdcard/RetroArch/system/ and did
+contain every file it names.  Flycast resolves the NAOMI BIOS
+relative to the CONTENT directory, so it also has to be next to
+the games in /sdcard/roms/.  Copying it there fixed it instantly.
+
+Do NOT try to diagnose this from the archive.  Three different
+naomi.zip files were tried (8.0 MB, and two different 9.3 MB sets);
+all three contained the exact filenames in the error, and all three
+failed identically.  The message means "cannot find the archive",
+not "the archive is wrong".
+
+neogeo.zip is different - FinalBurn finds it in system/ alone, and
+SVC Chaos boots that way.  Only naomi.zip needs both.
+
+
+WHY EVERY GAME AFTER THE FIRST WENT BLACK
+-----------------------------------------
+The menu fired RetroArch's launch intent without stopping it
+first.  If RetroArch's task is still alive, Android brings it
+forward and SILENTLY DROPS the intent extras - so it reloads the
+previous content and you get a black screen.  First launch after a
+reboot works; everything after it does not.
+
+Tell-tale in logcat: the launch produces NO "I RetroArch:" lines at
+all, only the "ActivityManager: START" line.  If you see that, the
+extras were dropped.
+
+Fixed by calling ActivityManager.killBackgroundProcesses() on
+RetroArch, then waiting 400 ms, before firing the intent.  That
+needs only KILL_BACKGROUND_PROCESSES, a normal permission.
+
+
+AUDIO LEVEL AND SPEAKER HISS
+----------------------------
+NAOMI output is quieter than the CPS games.  Raising the system
+volume to compensate just amplifies the amplifier's own noise floor
+- that is what speaker hiss is.  Raise the DIGITAL level instead:
+config/Flycast.cfg is a core override (audio_volume = "6.0") that
+RetroArch applies to Flycast only, and the system volume sits at
+12/15.
+
+There is no VolumeKeeper any more.  It used to remember and re-apply
+the media volume, but it latched a bad reading once and pinned the
+cabinet at 1/15, and it fought the player when they touched the
+volume rocker.  Android persists stream volume by itself.
+
+Note this cabinet's audio routing has been seen as BOTH "headset"
+and "speaker" (dumpsys audio -> "Devices:").  Whichever it reports
+is the volume slot that matters; setting the other one does nothing.
+
+
+BUTTON REMAPS - AND WHY PLAYER 2 NEEDS ITS OWN COPY
+---------------------------------------------------
+FinalBurn and Flycast number a game's buttons in RetroPad order
+B, A, Y, X.  On this panel that lands the FIRST two buttons on the
+BOTTOM row - so Neo Geo came out as C D on top and A B underneath,
+and Guilty Gear as Slash / H-Slash on top with Punch and Kick
+below.  Backwards to anyone who knows the games.
+
+Fixed with per-game remap files in config/remaps, which swap them
+into reading order: 1 2 3 across the top, 4 bottom-left.
+
+  affected: SVC Chaos, Garou, KOF '98, Real Bout, Samurai Shodown V,
+            Cyberbots, Guilty Gear X, Power Stone
+  untouched: the six-button Capcom games, which are already right
+
+*** RetroArch does NOT apply remap files to network-gamepad input. ***
+
+That matters here because player 2 arrives over the network
+gamepad (see the two-player section).  A remap file therefore
+fixes player 1 only.  Player 2 gets the same substitution applied
+inside the menu app instead - P2BridgeService.MAP_ROW4, which is
+the same table by hand.
+
+Verified rather than assumed: a remap was temporarily pointed at
+Coin, and sending that button over the network gamepad did NOT
+move the credit counter, while sending Coin directly did.  If you
+change one table, change the other.
+
+Because the remap only covers player 1, the bridge deliberately
+sends player 1 NOTHING except coin and start.  If it sent buttons
+too, a remapped game would receive both the remapped and the
+unremapped button on every press.
+
+Player 1's Start is also not bound in cabinet.cfg.  The panel has
+no coin button, so the bridge sends coin-then-Start; a local Start
+bind would fire instantly and beat its own coin, and the first
+press of a fresh game would do nothing.
+
+
+WHY THE SECOND GAME USED TO RELOAD THE FIRST
+--------------------------------------------
+RetroArch's activity is declared launchMode="singleInstance".  A
+second launch therefore never creates a new instance - the intent
+goes to onNewIntent(), which RetroArch ignores.  The process has to
+actually die before different content will load.
+
+Nothing an ordinary app can do kills it.  Tested and failed:
+killBackgroundProcesses / am kill (no effect even with the app
+paused and silent), FLAG_ACTIVITY_CLEAR_TASK, MULTIPLE_TASK and
+NO_HISTORY (all ignored for singleInstance), BACK, the
+input_exit_emulator hotkey, and RetroArch's network QUIT command
+(not compiled into this build).  Patching singleInstance out of
+RetroArch's own manifest just wedges it - "Activity destroy
+timeout" - because it cannot re-initialise in the same process.
+
+The fix is simpler.  The failure is a RACE, not a wall: the first
+start lands while the old instance is still tearing down, and
+control comes back to the control-panel screen.  Pressing START a
+second time then works.  So ControlsActivity now watches whether it
+is still the resumed activity a few seconds after firing, and if it
+is, fires the launch again by itself.  The player only ever presses
+once.
+
+  If you change LAUNCH_DELAY_MS or RETRY_AFTER_MS, re-test swapping
+  between two DIFFERENT games with a single press each.  Launching
+  the same game twice will not reproduce the bug.
+
+An earlier version ALSO opened the Recents list when you held LIVE
+and dismissed RetroArch's card, on the theory that a task removal
+takes the process with it.  That has been removed.  It never
+worked, and it was costing every player a flash of the Recents
+list on the way back to the menu.
+
+The way to tell was to make each defence switchable at runtime
+(Settings.System keys - see Flags.java) and swap Street Fighter
+Alpha for Mortal Kombat 3 through the real menus with each
+combination:
+
+  Recents dismissal  launch retry   second game loaded?
+  -----------------  ------------   -------------------
+       on                on              yes
+       off               on              yes
+       on                off             NO
+       off               off             NO
+
+The retry is carrying it alone.  With the retry off, RetroArch
+logged only ONE core load across both games - so the dismissal had
+not killed anything, exactly as the getRootInActiveWindow() problem
+above predicted.
+
+  Worth repeating as a method: when several fixes are stacked on
+  one bug, the only way to know which one works is to be able to
+  turn them off one at a time without rebuilding.

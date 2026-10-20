@@ -1,0 +1,15 @@
+# MEDIUM - the default. Scanlines plus a soft aperture mask.
+# Toggled by CRT-FILTER.bat - do not rename, the .bat looks for these names.
+shaders = "1"
+shader0 = "cabinet-crt.glsl"
+filter_linear0 = "true"
+wrap_mode0 = "clamp_to_border"
+scale_type0 = "viewport"
+scale0 = "1.000000"
+parameters = "SCANLINE_WEIGHT;BEAM_WIDTH;MASK_STRENGTH;SHARPNESS;GLOW;BRIGHT_BOOST"
+SCANLINE_WEIGHT = "0.45"
+BEAM_WIDTH = "0.55"
+MASK_STRENGTH = "0.15"
+SHARPNESS = "0.90"
+GLOW = "0.15"
+BRIGHT_BOOST = "1.20"

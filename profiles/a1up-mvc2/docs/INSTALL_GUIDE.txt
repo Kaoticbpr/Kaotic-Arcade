@@ -1,0 +1,97 @@
+MvC2 CABINET MOD - INSTALL GUIDE
+=================================================
+
+WHAT THIS DOES
+  Adds two more Arcade1Up games to your Marvel vs Capcom 2 cabinet
+  (Big Blue and Yoga Flame) plus a front-end "SELECT A GAME" menu that
+  lets you pick between all three. Your original MvC2 is left untouched.
+
+WHAT'S IN THE _cloned FOLDER
+  BigBlue_cloned.apk       -> renamed to com.arcade.bigblue so it can live
+                              alongside MvC2 (they were both "com.arcade")
+  YogaFlame_cloned.apk     -> renamed to com.arcade.yoga
+  Frontend_Launcher.apk    -> the new menu (com.arcade.frontend)
+  All three are signed with the same platform key your cabinet uses.
+
+-------------------------------------------------
+STEP 1  -  CONNECT THE CABINET TO ADB
+-------------------------------------------------
+You only need ONE of these.
+
+OPTION A - WIFI (easiest for this "WiFi" cabinet)
+  1. On the cabinet, make sure it's connected to the SAME WiFi as this PC.
+  2. Find the cabinet's IP address. Easiest ways:
+       - Your router's admin page / connected-devices list, OR
+       - The cabinet's own network/settings screen if it shows an IP.
+  3. Run the installer with that IP, e.g.:
+       install_cabinet.bat  192.168.1.50
+     (The script runs:  adb connect 192.168.1.50:5555 )
+
+OPTION B - USB CABLE
+  1. Locate the USB port on the cabinet's main board (usually reachable
+     from the back panel). Plug a USB cable from the PC into it.
+  2. Just double-click install_cabinet.bat  (no IP needed).
+
+If "adb devices" shows the cabinet as "unauthorized", accept the
+"Allow USB debugging" prompt ON THE CABINET SCREEN, then continue.
+
+-------------------------------------------------
+STEP 2  -  RUN THE INSTALLER
+-------------------------------------------------
+  Double-click  platform-tools\install_cabinet.bat
+  (or run it with the IP for WiFi). It will:
+    - install the two cloned games
+    - install the new menu
+    - set the menu as the HOME / boot screen
+    - list what got installed
+    - offer to reboot
+
+After reboot the cabinet should boot into the SELECT A GAME menu.
+Move the joystick left/right, press any button to launch a game.
+Use the cabinet's normal exit (menu/back) to return to the menu.
+
+-------------------------------------------------
+HOW TO UNDO (revert to stock)
+-------------------------------------------------
+  adb shell cmd package set-home-activity com.arcade/com.arcade.activity.legal.LegalActivity
+  adb uninstall com.arcade.frontend
+  adb uninstall com.arcade.bigblue
+  adb uninstall com.arcade.yoga
+  adb reboot
+  (This leaves your original MvC2 exactly as it was.)
+
+TROUBLESHOOTING
+  - "adb connect" fails: WiFi ADB may not be on; use the USB option.
+  - Game shows "not installed" toast in the menu: that clone didn't install;
+    re-run its adb install line and check for errors.
+  - Menu doesn't stick as home after reboot: re-run the set-home-activity line.
+
+COMPLETE LIST OF GAMES
+  - Armored Warriors
+  - Battle Circuit
+  - Capcom Sports Club
+  - Captain Commando
+  - Darkstalkers 3
+  - Darkstalkers: The Night Warriors
+  - Eco Fighters
+  - Final Fight
+  - Giga Wing
+  - King of Dragons
+  - Knights of the Round
+  - Marvel Super Heroes
+  - Marvel Super Heroes in War of the Gems
+  - Marvel Super Heroes vs. Street Fighter
+  - Marvel vs. Capcom 2: New Age of Heroes
+  - Marvel vs. Capcom: Clash of Super Heroes
+  - Muscle Bomber Duo
+  - Night Warriors: Darkstalkers' Revenge
+  - Progear
+  - Saturday Night Slam Masters
+  - Street Fighter II: Champion Edition
+  - Street Fighter II': Hyper Fighting
+  - Strider
+  - Super Puzzle Fighter II Turbo
+  - Super Street Fighter II Turbo
+  - X-Men vs. Street Fighter
+  - X-Men: Children of the Atom
+  - X-Men: Mutant Apocalypse
