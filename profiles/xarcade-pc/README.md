@@ -8,6 +8,7 @@ plunger; a WLED LED strip around the TV reacts to every game.
 
 ```
 xarcade-pc/
+├── install/             # one-click installers: bazzite/install.sh and windows/Setup.cmd
 ├── CLAUDE.md            # host facts + rules Claude Code follows here
 ├── machine.env.example  # copy to machine.env and fill in (git-ignored)
 ├── controls/            # measured X-Arcade maps (green + purple mode, plunger) and the VPX mapping
@@ -21,12 +22,24 @@ xarcade-pc/
 └── backups/             # local snapshots (git-ignored)
 ```
 
+## Install
+| System | Run | Guide |
+|---|---|---|
+| **Bazzite** | `install/bazzite/install.sh` (`--haptics`, `--leveler`, `--all`), then `install/bazzite/add-table.sh <folder> "Title (Maker Year)"` | [docs/BAZZITE.md](docs/BAZZITE.md) |
+| **Windows 11** | double-click `install/windows/Setup.cmd`, then use the Pinball Table Installer | [docs/WINDOWS.md](docs/WINDOWS.md) |
+
+The Bazzite installer downloads Visual Pinball X 10.8.1 from its official GitHub release, sets up the folders,
+the table installer, tuned graphics and a black DMD, and adds VPX to ES-DE (install EmuDeck/ES-DE first). It is safe
+to run again and never deletes tables or ROMs. X-Arcade owners then run `install/bazzite/vpx/vpx-xarcade.sh` once
+with VPX closed (start one table first so VPX has logged the X-Arcade's controller id).
+
 ## Who can use what
 Everything here was built and tested on **Bazzite** only, with EmuDeck's `~/Emulation` layout, ES-DE and Steam
 Game Mode. Read each script before running it and change the addresses, LED count and paths for your setup.
 
 | Part | Bazzite | SteamOS | Windows | macOS |
 |---|---|---|---|---|
+| Pinball installer + table installer | Yes (tested) | Untested, likely | Yes (`install/windows`) | No |
 | Lights engine, rotate/portrait scripts, backup | Yes (tested) | Untested, likely with small changes | No (needs PipeWire, evdev, systemd) | No |
 | `lights/wled.py`, `lights/tv.py` (Python) | Yes | Yes | Should work, untested | Should work, untested |
 | X-Arcade maps, VPX mapping notes | Yes | Yes | Yes | Yes |
@@ -39,7 +52,6 @@ Settings you must provide: the lights service takes `--wled-ip` and `--leds`
 ## What's not here
 - **No tables, backglasses, ROMs or artwork.** They belong to their authors and ROMs are copyrighted;
   [`vpx/TABLES.md`](vpx/TABLES.md) links where to get each table. Please support the authors.
-- **One-click installers** for Bazzite and Windows are still being finished and will be added later.
 
 ## Hardware
 | Part | Used here |
