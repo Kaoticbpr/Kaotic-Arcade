@@ -1,0 +1,58 @@
+{
+ "The Walking Dead LE Premium (Stern 2014)": {
+  "strobe": "#ff1a1a",
+  "beacon": "#6fd13a"
+ },
+ "Godzilla (Sega 1998)": {
+  "strobe": "#3dff3d",
+  "beacon": "#ff4b14"
+ },
+ "Terminator 2 (Williams 1991)": {
+  "strobe": "#3fb5ff",
+  "beacon": "#ff1a1a"
+ },
+ "Attack from Mars (Bally 1995)": {
+  "strobe": "#3dff3d",
+  "beacon": "#ff2a2a"
+ },
+ "Medieval Madness (Williams 1997)": {
+  "strobe": "#ffd23f",
+  "beacon": "#ff2a2a"
+ },
+ "Twilight Zone (Bally 1993)": {
+  "strobe": "#8a3fff",
+  "beacon": "#3fd6ff"
+ },
+ "The Addams Family (Bally 1992)": {
+  "strobe": "#9a3fff",
+  "beacon": "#3dff3d"
+ },
+ "Creature from the Black Lagoon (Bally 1992)": {
+  "strobe": "#3dffb0",
+  "beacon": "#ffcc3f"
+ },
+ "Indiana Jones The Pinball Adventure (Williams 1993)": {
+  "strobe": "#ffd23f",
+  "beacon": "#ff5a1a"
+ },
+ "Star Trek The Next Generation (Williams 1993)": {
+  "strobe": "#3fb8ff",
+  "beacon": "#ff2a2a"
+ },
+ "Judge Dredd (Bally 1993)": {
+  "strobe": "#ffd23f",
+  "beacon": "#1a6bff"
+ },
+ "Freddy - A Nightmare on Elm Street (Gottlieb 1994)": {
+  "strobe": "#ff1a1a",
+  "beacon": "#1fcf3f"
+ },
+ "Monster Bash (Williams 1998)": {
+  "strobe": "#3dff3d",
+  "beacon": "#8a1aff"
+ },
+ "Theatre of Magic (Bally 1995)": {
+  "strobe": "#ff2a6e",
+  "beacon": "#8a1aff"
+ }
+}

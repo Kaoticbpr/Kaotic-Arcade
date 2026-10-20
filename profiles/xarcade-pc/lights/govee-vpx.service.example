@@ -1,0 +1,16 @@
+# Copy to ~/.config/systemd/user/govee-vpx.service, set YOUR_WLED_IP and --leds (your strip's LED count), then:
+#   systemctl --user daemon-reload && systemctl --user start govee-vpx
+[Unit]
+Description=Govee Glide lighting for VPX / ES-DE
+After=pipewire-pulse.service
+Wants=pipewire-pulse.service
+
+[Service]
+WorkingDirectory=%h/govee
+ExecStart=/usr/bin/python3 -u %h/govee/govee_vpx.py --lights wled --wled-ip YOUR_WLED_IP --leds 174
+Restart=always
+ExecStopPost=/usr/bin/curl -s -m 3 -X POST http://YOUR_WLED_IP/json/state -H 'Content-Type: application/json' -d '{"on":false,"live":false}'
+RestartSec=3
+
+[Install]
+WantedBy=default.target

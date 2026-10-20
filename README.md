@@ -7,7 +7,7 @@ Each setup is a separate mod with its own folder under `profiles/`:
 
 | Profile | Setup |
 |---|---|
-| [`xarcade-pc`](profiles/xarcade-pc/) | X-Arcade Arcade2TV-XR on a Windows/Linux/Mac host with EmulationStation + VPX standalone |
+| [`xarcade-pc`](profiles/xarcade-pc/) | The rotating KaoticBPR arcade: X-Arcade Arcade2TV-XR, Bazzite mini PC, ES-DE + VPX standalone, portrait pinball, WLED lights |
 | [`iconic-sf2-pi5`](profiles/iconic-sf2-pi5/) | Iconic Street Fighter II cabinet (Raspberry Pi 5), managed over SSH |
 
 Open Claude Code inside a profile folder to work on that setup; its `CLAUDE.md`
