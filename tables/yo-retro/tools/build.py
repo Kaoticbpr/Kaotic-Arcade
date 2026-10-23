@@ -152,7 +152,9 @@ def main():
     out = dist / f"{TABLE_FILE}.vpx"
     run(vpxtool, "assemble", "-f", expanded, out)
     run(vpxtool, "verify", out)
-    print(f"built {out}")
+    # Legends Unchained reads <table>.ini from beside the .vpx, so dist/ is what goes on the USB drive.
+    shutil.copy(TABLE / "legends" / "table.ini", dist / f"{TABLE_FILE}.ini")
+    print(f"built {out} and {TABLE_FILE}.ini")
 
 
 if __name__ == "__main__":

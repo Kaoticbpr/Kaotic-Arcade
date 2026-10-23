@@ -39,8 +39,8 @@ python3 tools/render_layout.py  # -> docs/layout.png and the art templates
 
 ## Test on the Legends 4KP
 
-1. Build, then copy `dist/YoRetro.vpx` (and `legends/table.ini`, renamed to `YoRetro.ini`)
-   to the USB drive using the Table Manager's **Add Table > Manual** page.
+1. Build, then copy `dist/YoRetro.vpx` and `dist/YoRetro.ini` (the build copies it from
+   `legends/table.ini`) to the USB drive using the Table Manager's **Add Table > Manual** page.
 2. Play, and note anything off: stuck balls, unmakeable shots, the auto-launch too weak or too strong
    (`AutoKickSpeed` in `script/00_setup.vbs`), the DMD layout.
 3. Tune the view with **F12** in game and save; send back the new `View*` values for `legends/table.ini`.
