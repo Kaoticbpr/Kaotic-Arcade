@@ -192,6 +192,11 @@ def main():
     # Legends Unchained reads <table>.ini from beside the .vpx, so dist/ is what goes on the USB drive.
     shutil.copy(TABLE / "legends" / "table.ini", dist / f"{TABLE_FILE}.ini")
     print(f"built {out} and {TABLE_FILE}.ini")
+    # The Table Manager takes these as the launcher wheel image and the loading backglass.
+    for name in ("launcher.png", "backglass.png"):
+        if (TABLE / "art" / name).exists():
+            shutil.copy(TABLE / "art" / name, dist / name)
+            print(f"art: {name} copied to dist/")
 
 
 if __name__ == "__main__":
