@@ -19,7 +19,7 @@ are starters: say them your way, ad-lib, and swap in the show's real catchphrase
 
 | Event | When | Starter lines |
 |---|---|---|
-| `start` | game starts | K: "Yo! Welcome to Yo! Retro!" / H: "It's Thursday, let's flip!" / both: "Yo! Retro!" |
+| `start` | game starts | K: "Yo! Welcome to Yo! Retro!" / H: "Let's flip!" / both: "Yo! Retro!" |
 | `player_added` | another player joins | K: "Oh, we got company." / H: "Pull up a chair!" |
 | `next_ball` | next ball / next player | K: "Next ball, let's go." / H: "Back at it." |
 | `shoot_again` | extra ball is played | K: "Shoot again!" / H: "Run it back!" |
@@ -29,7 +29,7 @@ are starters: say them your way, ad-lib, and swap in the show's real catchphrase
 | `tilt` | tilted | K: "Tilt. Yeah, that's going in the review." / H: "And that's a zero out of ten." |
 | `game_over` | game over | K: "That's the show, folks." / H: "Like, subscribe, and play again!" |
 | `high_score` | new high score | K: "New high score! Put it in the description!" / H: "Leaderboard, baby!" |
-| `attract` | every ~36 s while idle | K: "Yo! Come play some pinball." / H: "Press start, we don't bite." / K: "New episode every Thursday!" |
+| `attract` | every ~36 s while idle | K: "Yo! Come play some pinball." / H: "Press start, we don't bite." / K: "Grab a seat and flip!" |
 
 ## Shots and awards
 
@@ -37,6 +37,7 @@ are starters: say them your way, ad-lib, and swap in the show's real catchphrase
 |---|---|---|
 | `skill_shot` | skill shot | K: "Yo! Skill shot!" / H: "Called it." |
 | `ramp` | ramp (not in multiball) | K: "Ramp!" / H: "Up and over!" |
+| `combo` | left ramp then right ramp (or back) | K: "Combo!" / H: "Back to back!" |
 | `orbit` | orbit | K: "Around the world!" / H: "Loop de loop." |
 | `bonus_x` | bonus multiplier up | K: "Bonus going up." / H: "Multiplied!" |
 | `extra_ball_lit` | extra ball lit | K: "Extra ball is lit, shoot the scoop!" |
@@ -68,4 +69,4 @@ Placeholder segment names; tell me the real ones and I'll rename them on the tab
 | `half_a_dozen` | every 6th jackpot: super jackpot | H: "HALF! A! DOZEN!" / K: "Six of 'em! Super jackpot!" |
 | `finale_lit` | all five segments done | K: "Yo! Retro Live is lit!" / H: "We're going live!" |
 | `finale` | wizard mode starts | both: "We're LIVE! Everything's worth a hundred grand!" |
-| `finale_end` | wizard mode ends | K: "What a show!" / H: "Same time next Thursday!" |
+| `finale_end` | wizard mode ends | K: "What a show!" / H: "Until next time!" |

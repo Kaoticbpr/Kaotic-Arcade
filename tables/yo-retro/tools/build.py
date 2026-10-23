@@ -27,7 +27,7 @@ VERSION = "0.2.0"
 # Callout events the script plays (see VOICE_SCRIPT.md); takes are sounds/voice/vo_<event>_<n>.
 VOICE_EVENTS = {
     "start", "player_added", "next_ball", "shoot_again", "skill_shot", "ball_saved", "drain", "bonus_x",
-    "ramp", "orbit", "extra_ball_lit", "extra_ball", "lock_lit", "lock", "multiball", "jackpot",
+    "ramp", "combo", "orbit", "extra_ball_lit", "extra_ball", "lock_lit", "lock", "multiball", "jackpot",
     "half_a_dozen", "segment_1", "segment_2", "segment_3", "segment_4", "segment_5", "segment_done",
     "segment_over", "more_time", "finale_lit", "finale", "finale_end", "tilt_warning", "tilt",
     "game_over", "high_score", "attract",
@@ -191,7 +191,8 @@ def main():
     run(vpxtool, "verify", out)
     # Legends Unchained reads <table>.ini from beside the .vpx, so dist/ is what goes on the USB drive.
     shutil.copy(TABLE / "legends" / "table.ini", dist / f"{TABLE_FILE}.ini")
-    print(f"built {out} and {TABLE_FILE}.ini")
+    shutil.copy(TABLE / "legends" / "buttons.ini", dist / "buttons.ini")
+    print(f"built {out}, {TABLE_FILE}.ini and buttons.ini")
     # The Table Manager takes these as the launcher wheel image and the loading backglass.
     for name in ("launcher.png", "backglass.png"):
         if (TABLE / "art" / name).exists():

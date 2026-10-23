@@ -10,6 +10,7 @@ Sub Table1_Init()
 	BallsOnPF = 0
 	BallsToLaunch = 0
 	DMD_Setup
+	InitLightShow
 	AllLightsOff
 	StartAttract
 	GameTimer.Enabled = True
@@ -35,6 +36,16 @@ Sub Table1_KeyDown(ByVal keycode)
 		Plunger.PullBack
 		PlaySoundAt "plungerpull", Plunger
 	End If
+
+	' The launch button is a full plunge however short the press: pull all the way, then fire.
+	If keycode = LaunchButtonKey And Not LaunchButtonTimer.Enabled Then
+		Plunger.PullBack
+		PlaySoundAt "plungerpull", Plunger
+		LaunchButtonTimer.Enabled = True
+	End If
+
+	If keycode = LeftMagnaSave And GameOn And Not Tilted Then RotateLanes -1
+	If keycode = RightMagnaSave And GameOn And Not Tilted Then RotateLanes 1
 
 	If keycode = LeftFlipperKey Then
 		If GameOn And Not Tilted Then
@@ -73,6 +84,12 @@ Sub Table1_KeyUp(ByVal keycode)
 		RightFlipper.RotateToStart
 		If GameOn And Not Tilted Then PlaySoundAt SoundFX("fx_flipperdown", DOFFlippers), RightFlipper
 	End If
+End Sub
+
+Sub LaunchButtonTimer_Timer()
+	LaunchButtonTimer.Enabled = False
+	Plunger.Fire
+	PlaySoundAt "plunger", Plunger
 End Sub
 
 ' DOF is not used on the 4KP, but the starter table's sound calls expect these.
@@ -120,6 +137,8 @@ Sub StartBall()
 	JackpotValue = 100000
 	LastLeftOrbitTick = -100
 	LastRightOrbitTick = -100
+	LastRampSide = 0
+	LastRampTick = -100
 	For i = 1 To 3 : TopLane(i) = False : Next
 	For i = 1 To 2 : StandupLit(i) = False : Next
 	ResetDrops

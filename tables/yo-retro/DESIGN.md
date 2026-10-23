@@ -1,6 +1,6 @@
 # Yo! Retro: table design
 
-The show: Yo! Retro, every Thursday on [youtube.com/@kaoticbpr](https://www.youtube.com/@kaoticbpr).
+The show: Yo! Retro on [youtube.com/@kaoticbpr](https://www.youtube.com/@kaoticbpr).
 KaoticBPR and his co-host Half-A-Dozen review AtGames table releases. Every name and line of text the
 player sees is set in `script/00_setup.vbs`, so renaming is one edit.
 
@@ -10,12 +10,13 @@ player sees is set in `script/00_setup.vbs`, so renaming is one edit.
 
 | Shot | Fed by | Feature |
 |---|---|---|
-| Left ramp | right flipper | UNBOXING, multiball jackpots, 5 per ball lights the extra ball |
+| Left ramp | right flipper | UNBOXING, multiball jackpots, 5 ramps per ball lights the extra ball. Drops off into the pop bumpers |
+| Right ramp | left flipper | The left ramp's twin: same awards. Drops off above the right orbit. Left then right (or back) within 4 s is a COMBO, 50,000 |
 | Left orbit / right orbit | right / left flipper | Loops round the top arch. FIRST FLIPS. The spinner sits in the right lane (THE VERDICT) |
 | Center scoop | both flippers | Starts segments and multiball locks, collects the extra ball, starts Yo! Retro Live |
-| Right 3-bank drop targets | left flipper | Completing the bank lights a lock. BUG HUNT |
-| 2 standups (under the right pop bumper) | left flipper | Both: +10 s on a running segment, else 15,000 |
-| 3 pop bumpers | top lanes, ramp drop-off | CHAT ATTACK |
+| Left 3-bank drop targets (pocket left of the left ramp) | right flipper | Completing the bank lights a lock. BUG HUNT |
+| 2 standups (right of the scoop) | left flipper | Both: +10 s on a running segment, else 15,000 |
+| 3 pop bumpers | top lanes, left ramp drop-off | CHAT ATTACK |
 | 3 top lanes | plunger, bumpers | Skill shot, bonus multiplier up to 5x, relight segment start |
 | Inlanes / outlanes | | Bonus, outlane consolation |
 
@@ -31,7 +32,7 @@ player sees is set in `script/00_setup.vbs`, so renaming is one edit.
 
   | # | Segment | Hot shot | Goal |
   |---|---|---|---|
-  | 1 | UNBOXING | left ramp | 5 |
+  | 1 | UNBOXING | either ramp | 5 |
   | 2 | FIRST FLIPS | orbits | 5 |
   | 3 | CHAT ATTACK | pop bumpers | 25 |
   | 4 | BUG HUNT | drop targets | 6 |
@@ -39,12 +40,14 @@ player sees is set in `script/00_setup.vbs`, so renaming is one edit.
 
   These are placeholders built around a review episode; rename them to the show's real segments.
 - **Half-A-Dozen Multiball:** each drop-target bank completion lights a lock at the scoop (virtual
-  locks, so nothing gets stuck). The third lock starts 3-ball multiball. Every ramp is a jackpot
+  locks, so nothing gets stuck). The third lock starts 3-ball multiball. Every ramp, left or right, is a jackpot
   (100,000, plus 25,000 a hit), and **every 6th jackpot is a "HALF-A-DOZEN!" super jackpot worth 6x**.
 - **Yo! Retro Live (wizard mode):** finish all five segments, then shoot the lit scoop. 3-ball multiball
   where the ramp and orbits score 100,000. When it ends, the segments reset.
 - **Tilt:** nudging adds up; three warnings tilt the ball (no bonus, bumpers and slings go dead).
 - **Bonus:** inlanes, ramps, orbits and segments build bonus, multiplied by the top-lane multiplier.
+- **Light shows:** between games the inserts run an attract show (a sweep up the table, blink-all,
+  sparkle). Combos, jackpots, segment completes and multiball flash the whole table.
 - **Voices and music:** KaoticBPR and Half-A-Dozen call out the action (see
   [VOICE_SCRIPT.md](VOICE_SCRIPT.md)), and the Yo! Retro theme loops under play. The attract mode
   credits both hosts and drops a host quip about every 36 s.
@@ -55,11 +58,12 @@ player sees is set in `script/00_setup.vbs`, so renaming is one edit.
 |---|---|
 | The real segment names (if the show has its own) | `SegmentNames`, `SegmentHints` in `script/00_setup.vbs` |
 | Voice takes, recorded or clipped from episodes | `sounds/voice/`, see [VOICE_SCRIPT.md](VOICE_SCRIPT.md) |
-| Cartoon hosts, logo, playfield and backglass | `art/`, see the brief in [art/README.md](art/README.md) |
+| Plastics, a `.directb2s` backglass | `art/`, see [art/README.md](art/README.md) |
 
 ## Sound effects
 
-The script already calls these effects by name; until they exist they're silent. Drop matching files
+`tools/make_sounds.py` synthesizes all of these into `sounds/` (mechanical sounds, plus 8-bit chiptune
+stingers under the voice), so there's nothing to license. To replace one, drop a file with the same name
 in `sounds/` and rebuild. Host callouts are separate (`sounds/voice/`).
 
 | Name | When |

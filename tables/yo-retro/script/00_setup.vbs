@@ -14,7 +14,7 @@ Randomize
 ' Big DMD text fits about 16 characters, the small lines about 21.
 Const cGameName = "yoretro"               ' also the key for saved high scores
 Const ShowName = "YO! RETRO"
-Const ShowTagline = "EVERY THURSDAY"
+Const ShowTagline = "LET'S FLIP!"
 ' The five segments of an episode, in the order they're played (shots: see 20_rules.vbs)
 Dim SegmentNames : SegmentNames = Array("", "UNBOXING", "FIRST FLIPS", "CHAT ATTACK", "BUG HUNT", "THE VERDICT")
 Dim SegmentHints : SegmentHints = Array("", "RAMPS RIP IT OPEN", "SHOOT THE ORBITS", "HIT THE POP BUMPERS", "SQUASH 6 DROP TARGETS", "SPIN TO RATE IT")
@@ -34,6 +34,9 @@ Const ScoopKickAngle = 190
 Const ScoopKickSpeed = 9
 Const VoiceVolume = 1.0
 Const MusicVolume = 0.5           ' theme song under the gameplay
+' 4KP d-pad up: Legends Unchained maps it to JoyCustom1, which sends Enter (keycode 28). It launches the
+' ball. D-pad left/right arrive as LeftMagnaSave/RightMagnaSave and change the lit top lane.
+Const LaunchButtonKey = 28
 
 ' ---- FlexDMD constants -------------------------------------------------------------------------------
 Const FlexDMD_RenderMode_DMD_RGB = 2
@@ -56,3 +59,4 @@ Dim RampsThisBall, ExtraBallLit, LockLit, ModeLit, WizardLit
 Dim ActiveMode, ModeTicksLeft, ModeHits, ModeGoal, ModeValue
 Dim Multiball, WizardRunning, JackpotValue, JackpotCount
 Dim LastLeftOrbitTick, LastRightOrbitTick
+Dim LastRampSide, LastRampTick

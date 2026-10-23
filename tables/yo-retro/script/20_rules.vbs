@@ -2,20 +2,23 @@
 ' RULES: switches, segments (modes), locks and multiball, the finale
 '
 '  Segment          Hot shot          Goal
-'  1 UNBOXING       left ramp         5 ramps
+'  1 UNBOXING       either ramp       5 ramps
 '  2 FIRST FLIPS    orbits            5 orbits (either direction)
 '  3 CHAT ATTACK    pop bumpers       25 hits
 '  4 BUG HUNT       drop targets      6 targets
 '  5 THE VERDICT    spinner           60 spins
 '  The scoop starts the lit segment. Finish all five to light YO! RETRO LIVE at the scoop.
 '  Drop target bank lights a lock at the scoop; the third lock starts Half-A-Dozen Multiball:
-'  ramp = jackpot, every 6th jackpot = super jackpot (6x).
+'  either ramp = jackpot, every 6th jackpot = super jackpot (6x).
+'  Combo: the left ramp then the right ramp (or the other way) within 4 seconds.
 '*****************************************************************************************************
 
 Dim ModeGoals : ModeGoals = Array(0, 5, 5, 25, 6, 60)
 Dim ModeValues : ModeValues = Array(0, 25000, 25000, 5000, 10000, 2000)
 Const ModeCompleteAward = 100000
 Const FinaleShotValue = 100000
+Const ComboValue = 50000
+Const ComboTicks = 40            ' 4 seconds
 
 ' Called by every playfield switch before it scores.
 Sub Switch()
@@ -95,10 +98,25 @@ End Sub
 '------------------------------------------------------------------------------------------------ ramp and orbits
 
 Sub RampEnter_Hit() : PlaySoundAtBall "fx_rampenter" : End Sub
+Sub RightRampEnter_Hit() : PlaySoundAtBall "fx_rampenter" : End Sub
+Sub RampMade_Hit() : RampShot 1 : End Sub
+Sub RightRampMade_Hit() : RampShot 2 : End Sub
 
-Sub RampMade_Hit()
+' side: 1 = left ramp, 2 = right ramp. Both ramps do the same jobs; alternating them is a combo.
+Sub RampShot(side)
 	If Not GameOn Then Exit Sub
 	Switch
+	If LastRampSide <> 0 And LastRampSide <> side And Ticks - LastRampTick <= ComboTicks Then
+		AddScore ComboValue
+		AddBonus 5000
+		DMD_Message "COMBO!", FormatScore(ComboValue), 1500
+		FlashLights 6
+		Callout "combo", True
+		LastRampSide = 0
+	Else
+		LastRampSide = side
+	End If
+	LastRampTick = Ticks
 	RampsThisBall = RampsThisBall + 1
 	AddScore 10000
 	AddBonus 2000
@@ -115,6 +133,7 @@ Sub RampMade_Hit()
 		End If
 		JackpotValue = JackpotValue + 25000
 		PlaySound "fx_jackpot"
+		FlashLights 8
 	Else
 		Callout "ramp", False
 	End If
@@ -299,6 +318,7 @@ Sub EndMode(completed)
 		AddBonus 10000
 		DMD_Message SegmentNames(m), "COMPLETE", 2500
 		PlaySound "fx_modecomplete"
+		FlashLights 10
 		Callout "segment_done", True
 		If AllModesDone() Then
 			WizardLit = True
@@ -321,7 +341,7 @@ Sub LockBall()
 	If Locks(CurPlayer) >= LocksForMultiball Then
 		Locks(CurPlayer) = 0
 		StartMultiball LocksForMultiball - 1
-		DMD_Message MultiballName, "MULTIBALL - HIT RAMP", 2500
+		DMD_Message MultiballName, "MULTIBALL - HIT RAMPS", 2500
 		Callout "multiball", True
 	Else
 		DMD_Message "BALL " & Locks(CurPlayer) & " LOCKED", "", 1500
@@ -337,6 +357,7 @@ Sub StartMultiball(extraBalls)
 	GiveBallSave MultiballSaveSeconds
 	LaunchBalls extraBalls
 	PlaySound "fx_multiball"
+	FlashLights 16
 	UpdateLights
 End Sub
 
@@ -387,6 +408,7 @@ Sub SetLight(l, lit, blinking)
 End Sub
 
 Sub UpdateLights()
+	If ShowFlashLeft > 0 Then Exit Sub
 	If Not GameOn Or Tilted Then AllLightsOff : Exit Sub
 	SetLight TopLaneLight1, TopLane(1) Or (SkillShotActive And SkillLane = 1), SkillShotActive
 	SetLight TopLaneLight2, TopLane(2) Or (SkillShotActive And SkillLane = 2), SkillShotActive
@@ -400,6 +422,7 @@ Sub UpdateLights()
 	SetLight LockLight, LockLit, True
 	SetLight ExtraBallLight, ExtraBallLit, True
 	SetLight RampArrow, Multiball Or ActiveMode = 1 Or WizardRunning, True
+	SetLight RightRampArrow, Multiball Or ActiveMode = 1 Or WizardRunning, True
 	SetLight LeftOrbitArrow, ActiveMode = 2 Or WizardRunning, True
 	SetLight RightOrbitArrow, ActiveMode = 2 Or WizardRunning, True
 	SetLight ShootAgainLight, ShootAgain Or BallSaveActive, BallSaveActive
@@ -412,7 +435,7 @@ End Sub
 Sub AllLightsOff()
 	Dim l
 	For Each l In Array(TopLaneLight1, TopLaneLight2, TopLaneLight3, ModeLight1, ModeLight2, ModeLight3, _
-			ModeLight4, ModeLight5, ScoopLight, LockLight, ExtraBallLight, RampArrow, LeftOrbitArrow, _
+			ModeLight4, ModeLight5, ScoopLight, LockLight, ExtraBallLight, RampArrow, RightRampArrow, LeftOrbitArrow, _
 			RightOrbitArrow, ShootAgainLight, BonusXLight2, BonusXLight3, BonusXLight4, BonusXLight5)
 		l.State = 0
 	Next

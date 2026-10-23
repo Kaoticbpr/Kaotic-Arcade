@@ -95,6 +95,7 @@ End Sub
 Sub StartAttract()
 	AttractPage = 0
 	AttractTimer.Enabled = True
+	StartLightShow
 	If Not MessageShowing Then ShowAttractPage
 End Sub
 

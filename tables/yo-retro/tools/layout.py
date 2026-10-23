@@ -162,6 +162,16 @@ def parts():
     p.append(trigger("RampMade", 244, 410, radius=25, shape="none", surface="LeftRamp", visible=False))
     p.append(insert("RampArrow", 300, 1100, "#ff2020", radius=14))
 
+    # Right ramp: the left ramp's twin, fed by the left flipper. It hugs the right orbit guide so no
+    # ball-sized gap is left between them, and drops off above the right orbit, clear of Bumper2.
+    right_ramp_path = [(700, 1020), (712, 860), (728, 690), (735, 560), (735, 450)]
+    p.append(ramp("RightRamp", right_ramp_path, 0.0, 80.0))
+    p.append(wall("RightRampGuideL", thick_line([(655, 1030), (668, 860), (686, 660)], 8), height=60))
+    p.append(wall("RightRampGuideR", thick_line([(745, 1030), (756, 860), (768, 660)], 8), height=60))
+    p.append(trigger("RightRampEnter", 700, 990, radius=25, shape="none", visible=False))
+    p.append(trigger("RightRampMade", 735, 480, radius=25, shape="none", surface="RightRamp", visible=False))
+    p.append(insert("RightRampArrow", 700, 1100, "#ff2020", radius=14))
+
     # Left orbit lane (along the left wall) and right orbit lane (beside the shooter lane).
     p.append(wall("LeftOrbitGuide", thick_line([(110, 1000), (110, 700), (115, 470)], 8), height=50))
     p.append(trigger("LeftOrbit", 64, 760, radius=25, shape="none", visible=False))
@@ -176,14 +186,15 @@ def parts():
     p.append(kicker("Scoop", 470, 760))
     p.append(insert("ScoopLight", 470, 830, "#ffffff", radius=14))
 
-    # Right 3-bank drop targets, facing the left flipper.
-    for i, (x, y) in enumerate(((640, 975), (680, 1015), (720, 1055)), start=1):
-        p.append(target(f"Drop{i}", x, y, rot=45.0, drop=True))
-    p.append(insert("LockLight", 640, 1100, "#00e040", radius=14))
+    # Left 3-bank drop targets in the pocket between the left orbit guide and the left ramp, angled
+    # square-on to the right flipper's shot (which passes left of the ramp entrance).
+    for i, (x, y) in enumerate(((145, 985), (181, 967), (217, 949)), start=1):
+        p.append(target(f"Drop{i}", x, y, rot=-26.6, drop=True))
+    p.append(insert("LockLight", 181, 1045, "#00e040", radius=14))
 
-    # Two standup targets below the right bumper.
-    p.append(target("Standup1", 600, 690, rot=40.0))
-    p.append(target("Standup2", 640, 735, rot=40.0))
+    # Two standup targets right of the scoop, clear of the right ramp entrance.
+    p.append(target("Standup1", 575, 650, rot=20.0))
+    p.append(target("Standup2", 600, 700, rot=20.0))
 
     # Segment (mode) inserts in an arc below the scoop, extra ball, shoot again.
     for i, (x, y) in enumerate(((380, 935), (425, 910), (470, 900), (515, 910), (560, 935)), start=1):
@@ -206,7 +217,8 @@ def parts():
     # Script timers.
     for name, ms in (("GameTimer", 100), ("MessageTimer", 2000), ("AutoLaunchTimer", 600),
                      ("BallSaveTimer", 10000), ("DropResetTimer", 1500), ("ScoopTimer", 1200),
-                     ("EndBallTimer", 2500), ("AttractTimer", 3000), ("TiltDecayTimer", 1500)):
+                     ("EndBallTimer", 2500), ("AttractTimer", 3000), ("TiltDecayTimer", 1500),
+                     ("LaunchButtonTimer", 800), ("LightShowTimer", 100)):
         p.append(timer(name, ms))
     return p
 

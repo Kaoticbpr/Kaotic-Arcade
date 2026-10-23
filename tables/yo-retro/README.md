@@ -1,14 +1,14 @@
 # Yo! Retro (original VPX table)
 
-An original, modern-style pinball table for Visual Pinball X, based on **Yo! Retro**, the Thursday show
+An original, modern-style pinball table for Visual Pinball X, based on **Yo! Retro**, the show
 on [youtube.com/@kaoticbpr](https://www.youtube.com/@kaoticbpr) where KaoticBPR and Half-A-Dozen review
 AtGames table releases.
 It's built first for the **AtGames Legends 4KP running Legends Unchained** (VPX standalone), so it can be
 shared with that community. It needs no ROM.
 
 **Status: v0.2, loads on the 4KP; gameplay not yet tested.** It has the layout, full rules, DMD score display and
-the Yo! Retro theme (segments, Half-A-Dozen Multiball, the finale). The theme song is in; the voice hooks are
-ready, but the art and voice takes still need adding. Rules and layout are in [DESIGN.md](DESIGN.md),
+the Yo! Retro theme (segments, Half-A-Dozen Multiball, the finale). Two ramps, the comic pop-art playfield,
+backglass and launcher art, sound effects, light shows and the theme song are in; voice takes still need adding. Rules and layout are in [DESIGN.md](DESIGN.md),
 lines to record are in [VOICE_SCRIPT.md](VOICE_SCRIPT.md), and the art brief is in [art/README.md](art/README.md).
 
 ![Layout](docs/layout.png)
@@ -39,8 +39,11 @@ python3 tools/render_layout.py  # -> docs/layout.png and the art templates
 
 ## Test on the Legends 4KP
 
-1. Build, then copy `dist/YoRetro.vpx` and `dist/YoRetro.ini` (the build copies it from
-   `legends/table.ini`) to the USB drive using the Table Manager's **Add Table > Manual** page.
+1. Build, then add everything in `dist/` with the Table Manager's **Add Table > Manual** page:
+   `YoRetro.vpx`, `YoRetro.ini` (from `legends/table.ini`), `buttons.ini` (the launcher's button labels),
+   `launcher.png` and `backglass.png`.
+   Controls: flippers, nudge, Start (also adds players on ball 1), the plunger, and the d-pad: up
+   launches the ball at full strength, left and right change the lit top lane.
 2. Play, and note anything off: stuck balls, unmakeable shots, the auto-launch too weak or too strong
    (`AutoKickSpeed` in `script/00_setup.vbs`), the DMD layout.
 3. Tune the view with **F12** in game and save; send back the new `View*` values for `legends/table.ini`.
