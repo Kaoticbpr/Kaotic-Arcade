@@ -1,0 +1,10 @@
+{
+ "center": {
+  "x": 0.0,
+  "y": 0.0
+ },
+ "is_timer_enabled": false,
+ "timer_interval": 0,
+ "name": "TTimer",
+ "backglass": false
+}

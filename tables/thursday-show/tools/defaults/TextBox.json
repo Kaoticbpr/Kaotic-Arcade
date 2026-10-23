@@ -1,0 +1,26 @@
+{
+ "ver1": {
+  "x": 0.0,
+  "y": 0.0
+ },
+ "ver2": {
+  "x": 0.0,
+  "y": 0.0
+ },
+ "back_color": "#000000",
+ "font_color": "#ffffff",
+ "intensity_scale": 1.0,
+ "text": "",
+ "is_timer_enabled": false,
+ "timer_interval": 0,
+ "name": "TTextBox",
+ "align": "left",
+ "is_transparent": false,
+ "is_dmd": null,
+ "font": {
+  "style": [],
+  "weight": 0,
+  "size": 400,
+  "name": "Arial"
+ }
+}

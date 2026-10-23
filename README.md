@@ -13,3 +13,9 @@ Each setup is a separate mod with its own folder under `profiles/`:
 
 Open Claude Code inside a profile folder to work on that setup; its `CLAUDE.md`
 holds the device details and rules.
+
+## Original tables
+
+| Table | What |
+|---|---|
+| [`tables/thursday-show`](tables/thursday-show/) | An original VPX table based on KaoticBPR's Thursday YouTube show, built for the Legends 4KP (Legends Unchained) first |

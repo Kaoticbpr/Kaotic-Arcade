@@ -1,0 +1,29 @@
+{
+ "center": {
+  "x": 0.0,
+  "y": 0.0
+ },
+ "radius": 45.0,
+ "is_timer_enabled": false,
+ "timer_interval": 0,
+ "threshold": 1.0,
+ "force": 15.0,
+ "scatter": null,
+ "height_scale": 90.0,
+ "ring_speed": 0.5,
+ "orientation": 0.0,
+ "ring_drop_offset": null,
+ "cap_material": "",
+ "base_material": "",
+ "socket_material": "",
+ "ring_material": null,
+ "surface": "",
+ "name": "TBumper",
+ "is_cap_visible": true,
+ "is_base_visible": true,
+ "is_ring_visible": null,
+ "is_socket_visible": null,
+ "hit_event": null,
+ "is_collidable": null,
+ "is_reflection_enabled": null
+}
