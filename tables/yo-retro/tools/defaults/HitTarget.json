@@ -1,0 +1,37 @@
+{
+ "position": {
+  "x": 0.0,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "size": {
+  "x": 32.0,
+  "y": 32.0,
+  "z": 32.0
+ },
+ "rot_z": 0.0,
+ "image": "",
+ "target_type": "drop_target_simple",
+ "name": "THitTarget",
+ "material": "",
+ "is_visible": true,
+ "is_legacy": false,
+ "use_hit_event": true,
+ "threshold": 2.0,
+ "elasticity": 0.0,
+ "elasticity_falloff": 0.0,
+ "friction": 0.0,
+ "scatter": 0.0,
+ "is_collidable": true,
+ "disable_lighting_top": null,
+ "disable_lighting_below": null,
+ "depth_bias": 0.0,
+ "is_reflection_enabled": true,
+ "is_dropped": false,
+ "drop_speed": 0.5,
+ "is_timer_enabled": false,
+ "timer_interval": 0,
+ "raise_delay": null,
+ "physics_material": null,
+ "overwrite_physics": null
+}

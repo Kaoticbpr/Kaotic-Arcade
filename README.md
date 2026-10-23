@@ -13,3 +13,9 @@ Each setup is a separate mod with its own folder under `profiles/`:
 
 Open Claude Code inside a profile folder to work on that setup; its `CLAUDE.md`
 holds the device details and rules.
+
+## Original tables
+
+| Table | What |
+|---|---|
+| [`tables/yo-retro`](tables/yo-retro/) | **Yo! Retro**: an original VPX table based on KaoticBPR's YouTube show, built for the Legends 4KP (Legends Unchained) first |

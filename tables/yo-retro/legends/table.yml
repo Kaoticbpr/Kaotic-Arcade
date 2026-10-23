@@ -1,0 +1,12 @@
+# Draft Legends Unchained Table Manager config (see their table.yml.example).
+# Fill in once the table is published and listed on VPS (Virtual Pinball Spreadsheet):
+#   vpxVPSId / tableVPSId come from VPS, vpxChecksum is the md5 of the released .vpx.
+# The DMD uses FlexDMD's built-in fonts only, so no specialDMD pack is needed.
+---
+fps: 60
+tableVPSId: "TODO"
+testers:
+  - "KaoticBPR"
+vpxChecksum: "TODO"
+vpxVPSId: "TODO"
+tagline: "Yo! Let's flip!"

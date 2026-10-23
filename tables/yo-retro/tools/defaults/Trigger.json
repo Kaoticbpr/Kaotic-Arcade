@@ -1,0 +1,23 @@
+{
+ "center": {
+  "x": 0.0,
+  "y": 0.0
+ },
+ "radius": 25.0,
+ "rotation": 0.0,
+ "wire_thickness": null,
+ "scale_x": 0.0,
+ "scale_y": 0.0,
+ "is_timer_enabled": false,
+ "timer_interval": 0,
+ "material": "",
+ "surface": "",
+ "is_visible": true,
+ "is_enabled": true,
+ "hit_height": 50.0,
+ "name": "TTrigger",
+ "shape": "wire_a",
+ "anim_speed": 0.0,
+ "is_reflection_enabled": null,
+ "drag_points": []
+}

@@ -1,0 +1,5 @@
+build/
+dist/
+__pycache__/
+# Raw show assets (the intro video alone is over GitHub's 100 MB limit); commit what's made from them
+yo retro vpx table assets/
