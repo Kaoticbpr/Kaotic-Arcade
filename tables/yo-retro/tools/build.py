@@ -33,6 +33,15 @@ VOICE_EVENTS = {
     "game_over", "high_score", "attract",
 }
 
+# Legends Unchained runs VPX standalone 10.8.0, which refuses newer files. base/ is a 10.9 table, so the build
+# saves it as 10.8: these are the only parts and fields this table uses that 10.8 doesn't know (checked
+# against the 10.8.0 exampleTable.vpx and strippedTable.vpx from the vpinball repo).
+VPX_FILE_VERSION = "1080"
+VPX_109_ITEM_TYPES = {"PartGroup"}
+VPX_109_ITEM_FIELDS = {"part_group_name"}
+VPX_109_GAMEDATA_FIELDS = {"exposure"}
+VPX_109_RENDERPROBE_FIELDS = {"disable_light_reflection"}
+
 # Art the build picks up when present (see art/README.md). Missing files are fine.
 ART = {
     "playfield": TABLE / "art" / "playfield.png",
@@ -104,6 +113,31 @@ def add_art(expanded):
     gamedata_path.write_text(json.dumps(gamedata, indent=2))
 
 
+def save_as_vpx_108(expanded):
+    items = expanded / "gameitems"
+    index_path = expanded / "gameitems.json"
+    index = json.loads(index_path.read_text())
+    dropped = [e for e in index if e["file_name"].split(".")[0] in VPX_109_ITEM_TYPES]
+    for entry in dropped:
+        (items / entry["file_name"]).unlink()
+    index_path.write_text(json.dumps([e for e in index if e not in dropped], indent=2))
+    for path in items.glob("*.json"):
+        item = json.loads(path.read_text())
+        for fields in item.values():
+            for field in VPX_109_ITEM_FIELDS:
+                fields.pop(field, None)
+        path.write_text(json.dumps(item, indent=2))
+    for name, fields in (("gamedata.json", VPX_109_GAMEDATA_FIELDS), ("renderprobes.json", VPX_109_RENDERPROBE_FIELDS)):
+        path = expanded / name
+        data = json.loads(path.read_text())
+        for entry in data if isinstance(data, list) else [data]:
+            for field in fields:
+                entry.pop(field, None)
+        path.write_text(json.dumps(data, indent=2))
+    (expanded / "version.txt").write_text(VPX_FILE_VERSION)
+    print(f"vpx: saved as file version {VPX_FILE_VERSION} (VPX 10.8), dropped {len(dropped)} part groups")
+
+
 def add_sounds(expanded):
     """Every sounds/**/<name>.wav|ogg|mp3 becomes a table sound the script can play by <name>."""
     files = [f for f in sorted((TABLE / "sounds").rglob("*")) if f.suffix.lower() in (".wav", ".ogg", ".mp3")]
@@ -117,8 +151,10 @@ def add_sounds(expanded):
         (expanded / "sounds").mkdir(exist_ok=True)
     for f in files:
         shutil.copy(f, expanded / "sounds" / f.name)
+        # Music is stereo and plays from the backglass; the playfield output is for positional (mono) effects.
+        target = "backglass" if f.parent.name == "music" else "table"
         sounds.append({"name": f.stem, "path": f.name, "internal_name": f.stem, "fade": 0, "volume": 0,
-                       "balance": 0, "output_target": "table"})
+                       "balance": 0, "output_target": target})
     sounds_path.write_text(json.dumps(sounds, indent=2))
     print(f"sounds: {len(files)} added")
     return stems
@@ -137,6 +173,7 @@ def main():
 
     names = layout.apply(expanded)
     print(f"layout: {len(names)} parts added")
+    save_as_vpx_108(expanded)
     sound_names = add_sounds(expanded)
     write_script(expanded, sound_names)
     write_info(expanded)

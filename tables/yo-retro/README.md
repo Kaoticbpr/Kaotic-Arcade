@@ -6,7 +6,7 @@ AtGames table releases.
 It's built first for the **AtGames Legends 4KP running Legends Unchained** (VPX standalone), so it can be
 shared with that community. It needs no ROM.
 
-**Status: v0.2, playable and untested on the cabinet.** It has the layout, full rules, DMD score display and
+**Status: v0.2, loads on the 4KP; gameplay not yet tested.** It has the layout, full rules, DMD score display and
 the Yo! Retro theme (segments, Half-A-Dozen Multiball, the finale). The theme song is in; the voice hooks are
 ready, but the art and voice takes still need adding. Rules and layout are in [DESIGN.md](DESIGN.md),
 lines to record are in [VOICE_SCRIPT.md](VOICE_SCRIPT.md), and the art brief is in [art/README.md](art/README.md).
@@ -45,5 +45,5 @@ python3 tools/render_layout.py  # -> docs/layout.png and the art templates
    (`AutoKickSpeed` in `script/00_setup.vbs`), the DMD layout.
 3. Tune the view with **F12** in game and save; send back the new `View*` values for `legends/table.ini`.
 
-The script was linted here but has never run: VPX isn't available in this environment, so the first
-cabinet run is the real test.
+Legends Unchained runs VPX standalone 10.8.0, which won't open a newer file, so the build saves the table
+as a 10.8 file (`save_as_vpx_108` in `tools/build.py`). The first build loads on the 4KP; play-testing is next.
