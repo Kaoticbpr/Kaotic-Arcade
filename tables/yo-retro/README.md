@@ -7,8 +7,8 @@ It's built first for the **AtGames Legends 4KP running Legends Unchained** (VPX 
 shared with that community. It needs no ROM.
 
 **Status: v0.2, playable and untested on the cabinet.** It has the layout, full rules, DMD score display and
-the Yo! Retro theme (segments, Half-A-Dozen Multiball, the finale). Voice and music hooks are ready, but
-the art, voice takes and theme song still need adding. Rules and layout are in [DESIGN.md](DESIGN.md),
+the Yo! Retro theme (segments, Half-A-Dozen Multiball, the finale). The theme song is in; the voice hooks are
+ready, but the art and voice takes still need adding. Rules and layout are in [DESIGN.md](DESIGN.md),
 lines to record are in [VOICE_SCRIPT.md](VOICE_SCRIPT.md), and the art brief is in [art/README.md](art/README.md).
 
 ![Layout](docs/layout.png)

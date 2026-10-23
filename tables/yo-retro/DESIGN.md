@@ -55,7 +55,6 @@ player sees is set in `script/00_setup.vbs`, so renaming is one edit.
 |---|---|
 | The real segment names (if the show has its own) | `SegmentNames`, `SegmentHints` in `script/00_setup.vbs` |
 | Voice takes, recorded or clipped from episodes | `sounds/voice/`, see [VOICE_SCRIPT.md](VOICE_SCRIPT.md) |
-| Theme song | `sounds/music/music_theme.ogg` |
 | Cartoon hosts, logo, playfield and backglass | `art/`, see the brief in [art/README.md](art/README.md) |
 
 ## Sound effects
@@ -79,7 +78,7 @@ Only use audio you own or that is free to share, because the table will be publi
 
 1. **v0.1:** layout, full rules, FlexDMD display, builds to a `.vpx`. Play-test on the 4KP.
 2. **v0.2 (this):** Yo! Retro theme, segments, Half-A-Dozen Multiball, voice and music hooks.
-   Next: voice takes and theme song in, real segment names.
+   Theme song in. Next: voice takes, real segment names.
 3. **v0.3:** art: cartoon hosts, playfield, plastics, backglass (`.directb2s`), launcher image.
 4. **v0.4:** polish: lighting shows, GI effects, DMD animations of the hosts, POV tuned on the 4KP,
    performance pass.
