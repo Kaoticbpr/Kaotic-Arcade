@@ -2,21 +2,24 @@ Option Explicit
 Randomize
 
 '*****************************************************************************************************
-' THURSDAY SHOW - an original table by KaoticBPR, version @@VERSION@@
+' YO! RETRO - an original table by KaoticBPR, hosted by KaoticBPR and Half-A-Dozen, version @@VERSION@@
 '
-' This script is generated: edit the files in tables/thursday-show/script/ and run tools/build.py.
+' This script is generated: edit the files in tables/yo-retro/script/ and run tools/build.py.
 '
 ' Built on the Visual Pinball X starter table by fuzzel, jimmyfingers, jpsalas, toxie & unclewilly,
 ' flipper primitives by zany, ball shadow by ninuzzu, positional sound helpers by djrobx.
 '*****************************************************************************************************
 
 ' ---- Show text: everything the player reads lives here so the theme is one edit away ----------------
-Const cGameName = "thursdayshow"          ' also the folder name for saved high scores
-Const ShowName = "THURSDAY SHOW"
+' Big DMD text fits about 16 characters, the small lines about 21.
+Const cGameName = "yoretro"               ' also the key for saved high scores
+Const ShowName = "YO! RETRO"
 Const ShowTagline = "EVERY THURSDAY"
-Dim SegmentNames : SegmentNames = Array("", "SEGMENT ONE", "SEGMENT TWO", "SEGMENT THREE", "SEGMENT FOUR", "SEGMENT FIVE")
-Const WizardName = "SEASON FINALE"
-Const MultiballName = "MULTIBALL"
+' The five segments of an episode, in the order they're played (shots: see 20_rules.vbs)
+Dim SegmentNames : SegmentNames = Array("", "UNBOXING", "FIRST FLIPS", "CHAT ATTACK", "BUG HUNT", "THE VERDICT")
+Dim SegmentHints : SegmentHints = Array("", "RAMPS RIP IT OPEN", "SHOOT THE ORBITS", "HIT THE POP BUMPERS", "SQUASH 6 DROP TARGETS", "SPIN TO RATE IT")
+Const WizardName = "YO! RETRO LIVE"
+Const MultiballName = "HALF-A-DOZEN"     ' "HALF-A-DOZEN MULTIBALL": every 6th jackpot is a super jackpot
 
 ' ---- Game settings -----------------------------------------------------------------------------------
 Const MaxPlayers = 4
@@ -29,6 +32,8 @@ Const LocksForMultiball = 3
 Const AutoKickSpeed = 45          ' tune on the cabinet if auto-launched balls fall short or overshoot
 Const ScoopKickAngle = 190
 Const ScoopKickSpeed = 9
+Const VoiceVolume = 1.0
+Const MusicVolume = 0.5           ' theme song under the gameplay
 
 ' ---- FlexDMD constants -------------------------------------------------------------------------------
 Const FlexDMD_RenderMode_DMD_RGB = 2
@@ -49,5 +54,5 @@ Dim TopLane(3), SkillLane, SkillShotActive
 Dim DropDown(3), StandupLit(2)
 Dim RampsThisBall, ExtraBallLit, LockLit, ModeLit, WizardLit
 Dim ActiveMode, ModeTicksLeft, ModeHits, ModeGoal, ModeValue
-Dim Multiball, WizardRunning, JackpotValue
+Dim Multiball, WizardRunning, JackpotValue, JackpotCount
 Dim LastLeftOrbitTick, LastRightOrbitTick

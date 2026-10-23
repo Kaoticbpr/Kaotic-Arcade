@@ -1,14 +1,15 @@
 '*****************************************************************************************************
 ' RULES: switches, segments (modes), locks and multiball, the finale
 '
-'  Segment  Hot shot          Goal
-'  1        left ramp         5 ramps
-'  2        orbits            5 orbits (either direction)
-'  3        pop bumpers       25 hits
-'  4        drop targets      6 targets
-'  5        spinner           60 spins
-'  The scoop starts the lit segment. Finish all five to light the finale at the scoop.
-'  Drop target bank lights a lock at the scoop; the third lock starts multiball, ramp = jackpot.
+'  Segment          Hot shot          Goal
+'  1 UNBOXING       left ramp         5 ramps
+'  2 FIRST FLIPS    orbits            5 orbits (either direction)
+'  3 CHAT ATTACK    pop bumpers       25 hits
+'  4 BUG HUNT       drop targets      6 targets
+'  5 THE VERDICT    spinner           60 spins
+'  The scoop starts the lit segment. Finish all five to light YO! RETRO LIVE at the scoop.
+'  Drop target bank lights a lock at the scoop; the third lock starts Half-A-Dozen Multiball:
+'  ramp = jackpot, every 6th jackpot = super jackpot (6x).
 '*****************************************************************************************************
 
 Dim ModeGoals : ModeGoals = Array(0, 5, 5, 25, 6, 60)
@@ -33,8 +34,9 @@ Sub TopLaneHit(n)
 	If SkillShotActive And n = SkillLane Then
 		SkillShotActive = False
 		AddScore 50000
-		DMD_Message "SKILL SHOT", "50,000", 1500
+		DMD_Message "YO! SKILL SHOT", "50,000", 1500
 		PlaySound "fx_skillshot"
+		Callout "skill_shot", True
 	End If
 	Switch
 	AddScore 1000
@@ -45,6 +47,7 @@ Sub TopLaneHit(n)
 		If BonusX < 5 Then BonusX = BonusX + 1
 		If ActiveMode = 0 And Not WizardLit Then ModeLit = True
 		DMD_Message "BONUS X" & BonusX, "", 1500
+		Callout "bonus_x", False
 	End If
 	UpdateLights
 End Sub
@@ -100,14 +103,25 @@ Sub RampMade_Hit()
 	AddScore 10000
 	AddBonus 2000
 	If Multiball And Not WizardRunning Then
-		AddScore JackpotValue
-		DMD_Message "JACKPOT", FormatScore(JackpotValue), 2000
+		JackpotCount = JackpotCount + 1
+		If JackpotCount Mod 6 = 0 Then
+			AddScore JackpotValue * 6
+			DMD_Message "HALF-A-DOZEN!", "SUPER JACKPOT " & FormatScore(JackpotValue * 6), 3000
+			Callout "half_a_dozen", True
+		Else
+			AddScore JackpotValue
+			DMD_Message "JACKPOT", FormatScore(JackpotValue) & "  (" & (6 - JackpotCount Mod 6) & " TO SUPER)", 2000
+			Callout "jackpot", True
+		End If
 		JackpotValue = JackpotValue + 25000
 		PlaySound "fx_jackpot"
+	Else
+		Callout "ramp", False
 	End If
 	If RampsThisBall = ExtraBallRamps And Not ExtraBallUsed(CurPlayer) Then
 		ExtraBallLit = True
 		DMD_Message "EXTRA BALL", "IS LIT", 1500
+		Callout "extra_ball_lit", True
 	End If
 	ModeProgress 1
 	FinaleShot FinaleShotValue
@@ -127,6 +141,7 @@ Sub OrbitHit(ByRef thisSide, otherSide)
 		AddScore 15000
 		AddBonus 1000
 		DMD_Message "ORBIT", "15,000", 1000
+		Callout "orbit", False
 		ModeProgress 2
 		FinaleShot FinaleShotValue
 	Else
@@ -162,6 +177,7 @@ Sub DropHit(n)
 		If Not Multiball Then
 			LockLit = True
 			DMD_Message "LOCK IS LIT", "SHOOT THE SCOOP", 1500
+			Callout "lock_lit", True
 		End If
 		DropResetTimer.Enabled = True
 	End If
@@ -194,6 +210,7 @@ Sub StandupHit(n)
 		If ActiveMode > 0 Then
 			ModeTicksLeft = ModeTicksLeft + 100
 			DMD_Message "+10 SECONDS", SegmentNames(ActiveMode), 1200
+			Callout "more_time", True
 		Else
 			AddScore 15000
 			DMD_Message "TARGETS", "15,000", 1000
@@ -214,6 +231,7 @@ Sub Scoop_Hit()
 		ShootAgain = True
 		DMD_Message "EXTRA BALL", "", 2000
 		PlaySound "fx_extraball"
+		Callout "extra_ball", True
 	End If
 	If WizardLit And Not Multiball Then
 		StartFinale
@@ -254,8 +272,9 @@ Sub StartMode()
 	ModeGoal = ModeGoals(ActiveMode)
 	ModeValue = ModeValues(ActiveMode)
 	ModeTicksLeft = ModeSeconds * 10
-	DMD_Message SegmentNames(ActiveMode), "STARTED", 2000
+	DMD_Message SegmentNames(ActiveMode), SegmentHints(ActiveMode), 2500
 	PlaySound "fx_modestart"
+	Callout "segment_" & ActiveMode, True
 End Sub
 
 Sub ModeProgress(shot)
@@ -280,12 +299,15 @@ Sub EndMode(completed)
 		AddBonus 10000
 		DMD_Message SegmentNames(m), "COMPLETE", 2500
 		PlaySound "fx_modecomplete"
+		Callout "segment_done", True
 		If AllModesDone() Then
 			WizardLit = True
 			DMD_Message WizardName, "IS LIT", 2500
+			Callout "finale_lit", True
 		End If
 	Else
 		DMD_Message SegmentNames(m), "OVER", 1500
+		Callout "segment_over", False
 	End If
 	UpdateLights
 	DMD_Refresh
@@ -299,16 +321,19 @@ Sub LockBall()
 	If Locks(CurPlayer) >= LocksForMultiball Then
 		Locks(CurPlayer) = 0
 		StartMultiball LocksForMultiball - 1
-		DMD_Message MultiballName, "SHOOT THE RAMP", 2500
+		DMD_Message MultiballName, "MULTIBALL - HIT RAMP", 2500
+		Callout "multiball", True
 	Else
 		DMD_Message "BALL " & Locks(CurPlayer) & " LOCKED", "", 1500
 		PlaySound "fx_lock"
+		Callout "lock", True
 	End If
 End Sub
 
 Sub StartMultiball(extraBalls)
 	Multiball = True
 	JackpotValue = 100000
+	JackpotCount = 0
 	GiveBallSave MultiballSaveSeconds
 	LaunchBalls extraBalls
 	PlaySound "fx_multiball"
@@ -324,6 +349,7 @@ Sub EndMultiball()
 		For m = 1 To 5 : ModeDone(CurPlayer, m) = False : Next
 		ModeLit = True
 		DMD_Message WizardName, "TOTAL " & FormatScore(Score(CurPlayer)), 2500
+		Callout "finale_end", True
 	End If
 	UpdateLights
 End Sub
@@ -333,6 +359,7 @@ Sub StartFinale()
 	WizardRunning = True
 	ModeLit = False
 	DMD_Message WizardName, "EVERY SHOT 100,000", 3000
+	Callout "finale", True
 	StartMultiball 2
 End Sub
 

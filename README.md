@@ -18,4 +18,4 @@ holds the device details and rules.
 
 | Table | What |
 |---|---|
-| [`tables/thursday-show`](tables/thursday-show/) | An original VPX table based on KaoticBPR's Thursday YouTube show, built for the Legends 4KP (Legends Unchained) first |
+| [`tables/yo-retro`](tables/yo-retro/) | **Yo! Retro**: an original VPX table based on KaoticBPR's YouTube show, built for the Legends 4KP (Legends Unchained) first |

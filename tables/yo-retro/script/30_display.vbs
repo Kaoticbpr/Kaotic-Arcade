@@ -3,7 +3,7 @@
 ' Falls back to the playfield text box when FlexDMD is not available (desktop testing).
 '*****************************************************************************************************
 
-Dim FlexDMD, UseFlex, MessageShowing, AttractPage
+Dim FlexDMD, UseFlex, MessageShowing, AttractPage, AttractCount
 
 Sub DMD_Setup()
 	Dim scene, fontBig, fontSmall
@@ -105,8 +105,10 @@ Sub StopAttract()
 End Sub
 
 Sub AttractTimer_Timer()
-	AttractPage = (AttractPage + 1) Mod 3
+	AttractPage = (AttractPage + 1) Mod 4
 	If Not MessageShowing Then ShowAttractPage
+	AttractCount = AttractCount + 1
+	If AttractCount Mod 12 = 0 Then Callout "attract", True     ' a host quip about every 36 seconds
 End Sub
 
 Sub ShowAttractPage()
@@ -114,5 +116,6 @@ Sub ShowAttractPage()
 		Case 0 : DMD_Set "", ShowName, ShowTagline
 		Case 1 : DMD_Set "FREE PLAY", "PRESS START", ""
 		Case 2 : DMD_Set "HIGH SCORE", FormatScore(HighScore), ""
+		Case 3 : DMD_Set "HOSTED BY", "KAOTICBPR", "+ HALF-A-DOZEN"
 	End Select
 End Sub

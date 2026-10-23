@@ -27,6 +27,7 @@ Sub Table1_KeyDown(ByVal keycode)
 			NumPlayers = NumPlayers + 1
 			DMD_Message "PLAYER " & NumPlayers, "ADDED", 1500
 			PlaySound "fx_start"
+			Callout "player_added", True
 		End If
 	End If
 
@@ -95,6 +96,8 @@ Sub StartGame()
 	Next
 	StopAttract
 	PlaySound "fx_start"
+	StartMusic
+	Callout "start", True
 	StartBall
 End Sub
 
@@ -128,6 +131,7 @@ Sub StartBall()
 	TiltDecayTimer.Enabled = True
 	UpdateLights
 	DMD_Message "PLAYER " & CurPlayer, "BALL " & BallNum, 1500
+	If BallNum > 1 Or CurPlayer > 1 Then Callout "next_ball", False
 	ServeBall
 End Sub
 
@@ -194,6 +198,7 @@ Sub Drain_Hit()
 
 	If BallSaveActive Then
 		DMD_Message "BALL SAVED", "", 1500
+		Callout "ball_saved", True
 		If Not Multiball Then BallSaveActive = False : BallSaveTimer.Enabled = False
 		LaunchBalls 1
 		UpdateLights
@@ -213,6 +218,7 @@ Sub EndOfBall()
 	If Tilted Then
 		DMD_Message "TILT", "NO BONUS", 2500
 	Else
+		Callout "drain", True
 		total = Bonus * BonusX
 		Score(CurPlayer) = Score(CurPlayer) + total
 		DMD_Message "BONUS " & FormatScore(Bonus) & " X" & BonusX, FormatScore(total), 2500
@@ -225,6 +231,7 @@ Sub EndBallTimer_Timer()
 	If ShootAgain Then
 		ShootAgain = False
 		DMD_Message "SHOOT AGAIN", "", 1500
+		Callout "shoot_again", True
 		StartBall
 		Exit Sub
 	End If
@@ -243,6 +250,7 @@ End Sub
 Sub GameOver()
 	Dim p, best
 	GameOn = False
+	StopMusic
 	best = 0
 	For p = 1 To NumPlayers
 		If Score(p) > Score(best) Or best = 0 Then best = p
@@ -252,8 +260,10 @@ Sub GameOver()
 		HighScore = Score(best)
 		SaveHighScore HighScore
 		DMD_Message "NEW HIGH SCORE", FormatScore(HighScore), 4000
+		Callout "high_score", True
 	Else
 		DMD_Message "GAME OVER", "", 3000
+		Callout "game_over", True
 	End If
 	StartAttract
 End Sub
@@ -308,6 +318,7 @@ Sub TiltWarning()
 	Else
 		DMD_Message "DANGER", "WARNING " & TiltWarn, 1500
 		PlaySound "fx_warning"
+		Callout "tilt_warning", True
 	End If
 End Sub
 
@@ -320,6 +331,7 @@ Sub Tilt()
 	AllLightsOff
 	DMD_Message "TILT", "", 3000
 	PlaySound "fx_tilt"
+	Callout "tilt", True
 End Sub
 
 ' Bumpers and slings go dead while tilted.
